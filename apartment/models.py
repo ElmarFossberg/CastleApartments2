@@ -18,6 +18,9 @@ class Apartment(models.Model):
     number_of_rooms = models.DecimalField(max_digits=4, decimal_places=0)
     sold = models.BooleanField()
 
+    def __str__(self):
+        return f"{self.address}, {self.postal_code}"
+
 class ApartmentImages(models.Model):
     apartment = models.ForeignKey(Apartment, on_delete=models.CASCADE)
     image = models.CharField(max_length=4096)
