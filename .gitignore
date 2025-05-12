@@ -1,0 +1,31 @@
+# Ignore PyCharm project settings
+.idea/
+
+# Ignore .env file
+.env
+
+# Ignore Python bytecode files
+*.pyc
+*.pyo
+__pycache__/
+
+# Ignore virtual environment folders
+venv/
+env/
+.venv/
+.env/
+
+# Ignore log files
+*.log
+
+# Ignore Django migrations
+*/migrations/*
+
+# Ignore database files
+*.sqlite3
+
+# Ignore Mac OS system files
+.DS_Store
+
+# Ignore editor backup files
+*~
