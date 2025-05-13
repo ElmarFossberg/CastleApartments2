@@ -1,6 +1,3 @@
-{% load static %}
-<link rel="stylesheet" href="{% static 'css/header.css' %}">
-
 <header class="header" role="banner">
   <nav class="main-nav" role="navigation" aria-label="Main navigation">
     <div class="nav-container">
@@ -16,14 +13,23 @@
           </ul>
       </div>
       <div class="profile-section" aria-label="User profile">
-        <button
-          class="profile-button"
-          aria-haspopup="true"
-          aria-expanded="false"
-        >
-          <span class="profile-icon" aria-hidden="true">👤</span>
-          <span class="visually-hidden">Profile Menu</span>
-        </button>
+          {% if user.is_authenticated %}
+              <ul class="flex">
+              <li><a href="/user/profile">Profile</a></li>
+
+              <li>
+                  <form method="post" action="{% url 'logout' %}">
+                      {% csrf_token %}
+                      <button type="submit">Logout</button>
+                  </form>
+              </li>
+              </ul>
+          {% else %}
+              <ul class="nav-links">
+                <li><a href="/user/register">Sign Up</a></li>
+                <li><a href="/user/login">Log In</a></li>
+                </ul>
+          {% endif %}
       </div>
     </div>
   </nav>
