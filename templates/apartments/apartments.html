@@ -1,4 +1,15 @@
 {% extends "base.html" %}
 {% block content %}
-    <h1 class="text-red">Apartments</h1>
+  <h1 class="text-red">Apartments</h1>
+  <div class="apartment-grid">
+    {% for apartment in apartments %}
+      <div class="card">
+        <h2>{{ apartment.address }}</h2>
+        <p>{{ apartment.postal_code }}</p>
+        <a href="/{{ apartment.id }}">View Details</a>
+      </div>
+    {% empty %}
+      <p>No apartments found.</p>
+    {% endfor %}
+  </div>
 {% endblock %}
