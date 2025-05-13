@@ -33,6 +33,12 @@ a {
   text-decoration: none;
 }
 
+button {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
 ul,
 ol {
   list-style: none;
@@ -41,21 +47,26 @@ ol {
 :root {
   --background: #f5f5f5;
   --primary: #007bff;
-    --secondary: #6c757d;
-    --text: #333333;
-    --light-gray: #e9ecef;
-    --border: #ced4da;
-    --white: #ffffff;
+  --secondary: #6c757d;
+  --text: #333333;
+  --light-gray: #e9ecef;
+  --border: #ced4da;
+  --white: #ffffff;
 }
 
 main {
-  padding: 2rem 4rem
+  padding: 2rem 4rem;
+}
+
+.flex {
+  display: flex;
+  gap: 2rem;
+  align-items: center;
 }
 
 .mb {
   margin-bottom: 2rem;
 }
-
 
 .mt {
   margin-top: 2rem;
@@ -73,3 +84,61 @@ main {
   margin-top: 2rem;
 }
 
+/* Form Styles */
+.form-group {
+  margin-bottom: 1rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  margin-bottom: 0.5rem;
+}
+
+.form-text {
+  font-size: 0.875rem;
+  color: var(--secondary);
+}
+
+/* Alert Messages */
+.alert {
+  padding: 1rem;
+  margin-bottom: 1rem;
+  border-radius: 4px;
+}
+
+.alert-error {
+  background-color: #f8d7da;
+  border: 1px solid #f5c6cb;
+  color: #721c24;
+}
+
+.alert-success {
+  background-color: #d4edda;
+  border: 1px solid #c3e6cb;
+  color: #155724;
+}
+
+/* Button Styles */
+.button {
+  background-color: var(--primary);
+  color: white;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.3s ease;
+}
+
+.button:hover {
+  background-color: #0056b3;
+}

@@ -1,5 +1,6 @@
+from django.contrib.auth.models import User
 from django.db import models
-
+from user.models import Seller
 # Create your models here.
 
 class ApartmentType(models.Model):
@@ -16,6 +17,7 @@ class PostalCode(models.Model):
 
 class Apartment(models.Model):
     type = models.ForeignKey(ApartmentType, on_delete=models.PROTECT)
+    seller = models.ForeignKey(Seller, null=True, blank=True, on_delete=models.PROTECT)
     postal_code = models.ForeignKey(PostalCode, on_delete=models.PROTECT, db_column='postal_code')
     address = models.CharField(max_length=255)
     price = models.DecimalField(max_digits=13, decimal_places=2)
