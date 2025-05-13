@@ -41,7 +41,11 @@ ol {
 :root {
   --background: #f5f5f5;
   --primary: #007bff;
-  --text: #333333;
+    --secondary: #6c757d;
+    --text: #333333;
+    --light-gray: #e9ecef;
+    --border: #ced4da;
+    --white: #ffffff;
 }
 
 main {

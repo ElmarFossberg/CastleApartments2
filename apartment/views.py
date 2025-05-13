@@ -11,6 +11,8 @@ def index(request):
         apartment.image = image.image if image else "https://developers.elementor.com/docs/assets/img/elementor-placeholder-image.png"
         # Format the price
         apartment.formatted_price = f"{apartment.price:,.0f}".replace(",", ".")
+        apartment.number_of_rooms = apartment.number_of_bathrooms + apartment.number_of_bedrooms
+        apartment.save()
     return render(request, 'apartments/apartments.html', {
         "apartments": apartments
     })
