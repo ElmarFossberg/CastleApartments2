@@ -1,3 +1,26 @@
-<header class="header">
-    <h1>Header</h1>
+<header class="header" role="banner">
+  <nav class="main-nav" role="navigation" aria-label="Main navigation">
+    <div class="nav-container">
+      <div class="nav-items-container">
+          <a href="/" class="logo" aria-label="Castle Apartments Home">
+            <h1>Castle Apartments</h1>
+          </a>
+          <ul class="nav-links">
+            <li><a href="/" aria-current="page">Home</a></li>
+            <li><a href="/my-offers">My Offers</a></li>
+            <li><a href="/my-visits">My Visits</a></li>
+          </ul>
+      </div>
+      <div class="profile-section" aria-label="User profile">
+        <button
+          class="profile-button"
+          aria-haspopup="true"
+          aria-expanded="false"
+        >
+          <span class="profile-icon" aria-hidden="true">👤</span>
+          <span class="visually-hidden">Profile Menu</span>
+        </button>
+      </div>
+    </div>
+  </nav>
 </header>
