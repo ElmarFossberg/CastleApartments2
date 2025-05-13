@@ -2,7 +2,7 @@
 
 {% block content %}
 <div class="apartment-detail-container">
-    <h1 class="apartment-title">{{ apartment.address }}, {{ apartment.postal_code }}</h1>
+    <h1 class="apartment-title">{{ apartment.address }}, {{ apartment.postal_code }} </h1>
     
     <div class="apartment-info-grid">
         <div class="apartment-image">
@@ -20,7 +20,7 @@
             
             <div class="detail-row">
                 <span class="detail-label">Price:</span>
-                <span class="detail-value">${{ apartment.price }}</span>
+                <span class="detail-value">{{ apartment.price }} kr.</span>
             </div>
             
             <div class="detail-row">

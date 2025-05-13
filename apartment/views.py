@@ -7,7 +7,10 @@ def index(request):
     apartments = Apartment.objects.all()
     for apartment in apartments:
         image = ApartmentImages.objects.filter(apartment=apartment).first()
-        apartment.image = image.image if image else None
+        # Add the first image
+        apartment.image = image.image if image else "https://developers.elementor.com/docs/assets/img/elementor-placeholder-image.png"
+        # Format the price
+        apartment.formatted_price = f"{apartment.price:,.0f}".replace(",", ".")
     return render(request, 'apartments/apartments.html', {
         "apartments": apartments
     })
