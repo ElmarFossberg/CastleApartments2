@@ -52,3 +52,24 @@ main {
   padding: 2rem 4rem
 }
 
+.mb {
+  margin-bottom: 2rem;
+}
+
+
+.mt {
+  margin-top: 2rem;
+}
+
+.ml {
+  margin-left: 2rem;
+}
+
+.m {
+  margin: 2rem;
+}
+
+.mt {
+  margin-top: 2rem;
+}
+
