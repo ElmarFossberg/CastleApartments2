@@ -5,7 +5,8 @@
     {% for apartment in apartments %}
       <div class="card">
         <h2>{{ apartment.address }}</h2>
-        <p>{{ apartment.postal_code }}</p>
+        <img src="{{ apartment.image }}" alt="image" />
+        <p>{{ apartment.postal_code.postal_code }}</p>
         <a href="/{{ apartment.id }}">View Details</a>
       </div>
     {% empty %}

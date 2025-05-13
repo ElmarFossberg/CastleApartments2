@@ -96,3 +96,13 @@ HUGI
   "systemData": null,
   "type": "Microsoft.DBforPostgreSQL/flexibleServers/firewallRules"
 }
+DANÍEL
+{
+  "endIpAddress": "157.157.244.70",
+  "id": "/subscriptions/dbf21caa-f9ff-4224-a1e7-7628fc546ede/resourceGroups/rg-verklegt-namskeid-ii-eu/providers/Microsoft.DBforPostgreSQL/flexibleServers/db-verklegt-namskeid-ii-eu-fztask/firewallRules/allow-my-ip",
+  "name": "allow-my-ip",
+  "resourceGroup": "rg-verklegt-namskeid-ii-eu",
+  "startIpAddress": "157.157.244.70",
+  "systemData": null,
+  "type": "Microsoft.DBforPostgreSQL/flexibleServers/firewallRules"
+}

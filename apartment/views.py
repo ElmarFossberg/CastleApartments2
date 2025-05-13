@@ -1,9 +1,13 @@
 from django.shortcuts import render
-from apartment.models import Apartment
+from apartment.models import Apartment, ApartmentImages
+
 
 # Create your views here.
 def index(request):
     apartments = Apartment.objects.all()
+    for apartment in apartments:
+        image = ApartmentImages.objects.filter(apartment=apartment).first()
+        apartment.image = image.image if image else None
     return render(request, 'apartments/apartments.html', {
         "apartments": apartments
     })
