@@ -1,16 +1,41 @@
 {% extends "base.html" %}
 {% block content %}
-  <h1 class="text-red">Apartments</h1>
-  <div class="apartment-grid">
-    {% for apartment in apartments %}
-      <div class="card">
-        <h2>{{ apartment.address }}</h2>
-        <img src="{{ apartment.image }}" alt="image" />
-        <p>{{ apartment.postal_code.postal_code }}</p>
-        <a href="/{{ apartment.id }}">View Details</a>
-      </div>
-    {% empty %}
-      <p>No apartments found.</p>
-    {% endfor %}
+  <div class="apartments-container">
+    <h1 class="apartments-title">Available Properties</h1>
+    <div class="apartments-grid">
+      {% for apartment in apartments %}
+        <div class="apartment-card {% if apartment.sold %}sold{% endif %}">
+          <div class="card-image-container">
+            <img class="card-image" src="{{ apartment.image }}" alt="{{ apartment.address }}" />
+            {% if apartment.sold %}
+              <div class="sold-banner">SOLD</div>
+            {% endif %}
+          </div>
+          <div class="card-content">
+            <h2 class="card-address">{{ apartment.address }}</h2>
+            <p class="card-postal">{{ apartment.postal_code.postal_code }}, {{ apartment.postal_code.city_name }}</p>
+
+            <div class="property-details">
+              <div class="detail-item">
+                <span class="detail-label">Price:</span>
+                <span class="detail-value">{{ apartment.formatted_price }} kr.</span>
+              </div>
+              <div class="detail-item">
+                <span class="detail-label">Rooms:</span>
+                <span class="detail-value">{{ apartment.number_of_rooms }}</span>
+              </div>
+              <div class="detail-item">
+                <span class="detail-label">Size:</span>
+                <span class="detail-value">{{ apartment.square_meters }} m²</span>
+              </div>
+            </div>
+
+            <a class="card-button" href="/{{ apartment.id }}">View Details</a>
+          </div>
+        </div>
+      {% empty %}
+        <p class="no-apartments">No properties found.</p>
+      {% endfor %}
+    </div>
   </div>
 {% endblock %}
