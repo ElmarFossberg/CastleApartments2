@@ -4,10 +4,15 @@ from django.db import models
 
 class ApartmentType(models.Model):
     type = models.CharField(max_length=255)
+    def __str__(self):
+        return self.type
 
 class PostalCode(models.Model):
     postal_code = models.CharField(max_length=255, primary_key=True)
     city_name = models.CharField(max_length=255)
+
+    def __str__(self):
+        return self.postal_code
 
 class Apartment(models.Model):
     type = models.ForeignKey(ApartmentType, on_delete=models.PROTECT)
