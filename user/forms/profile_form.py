@@ -23,4 +23,4 @@ class SellerForm(ModelForm):
 class RealEstateFirmForm(ModelForm):
     class Meta:
         model = RealEstateFirm
-        fields = ['firm_name', 'firm_address', 'firm_id', 'firm_image']
+        fields = ['firm_name', 'firm_address', 'firm_image']

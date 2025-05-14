@@ -5,7 +5,6 @@ class UserProfile(models.Model):
     USER_TYPES = [
         ('buyer', 'Buyer'),
         ('seller', 'Seller'),
-        ('firm', 'Real Estate Firm'),
     ]
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     user_type = models.CharField(max_length=10, choices=USER_TYPES)
@@ -29,7 +28,6 @@ class Buyer(models.Model):
 class RealEstateFirm(models.Model):
     firm_name = models.CharField(max_length=100)
     firm_address = models.CharField(max_length=255)
-    firm_id = models.CharField(max_length=50)
     firm_image = models.TextField(max_length=4096)
 
     def __str__(self):

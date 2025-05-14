@@ -1,9 +1,27 @@
 {% extends 'base.html' %}
+{% load static %}
+
 
 {% block content %}
-    <h1>Profile</h1>
-    <form method="post" action="{% url 'profile' %}">
-      {% csrf_token %} {{ form }}
-      <button type="submit" class="button">Update</button>
-    </form>
+<div class="profile-main">
+    <section class="profile-header">
+        <h1>Profile</h1>
+    </section>
+
+    <section class="profile-image">
+        <img src="{{ user.userprofile.profile_image }}" alt="{{ user.userprofile.full_name }}" class="profile-img" />
+    </section>
+
+    <section class="profile-form">
+        <form method="post" action="{% url 'profile' %}">
+            {% csrf_token %}
+            <div class="form-group">
+                {{ form }}
+            </div>
+            <button type="submit" class="button">Update</button>
+        </form>
+    </section>
+
+
+</div>
 {% endblock %}
