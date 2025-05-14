@@ -55,7 +55,7 @@ def profile(request):
 
     if prof.user_type == 'buyer':
         if hasattr(prof, 'buyer'):
-            form = BuyerForm(request.POST, instance=prof.buyer)
+            form = BuyerForm(request.POST or None, instance=prof.buyer)
         else:
             form = BuyerForm(request.POST or None)
     elif prof.user_type == 'seller':
@@ -65,9 +65,11 @@ def profile(request):
             form = SellerForm(request.POST or None)
 
     if request.method == 'POST' and form.is_valid():
-        form.save()
-        # Add any redirection or success messages as needed
-        return redirect('profile')  # Assuming you want to reload the profile page after saving
+        obj = form.save(commit=False)
+        if not hasattr(prof, prof.user_type):  # if buyer/seller does not exist yet
+            obj.profile = prof
+        obj.save()
+        return redirect('profile')
 
     return render(request, 'user/profile.html', {
         'profile': prof,
