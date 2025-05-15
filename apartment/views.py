@@ -46,9 +46,17 @@ def index(request):
         "form": form
     })
 
+
 def get_apartment_by_id(request, apartment_id):
     apartment = Apartment.objects.get(id=apartment_id)
-    # apartment = [x for x in apartments if x.id = apartment_id][0]
+
+    # Format price
+    apartment.formatted_price = f"{apartment.price:,.0f}".replace(",", ".")
+
+    # Get all images for this apartment
+    images = ApartmentImages.objects.filter(apartment=apartment)
+
     return render(request, 'apartments/apartment_detail.html', {
-        "apartment": apartment
+        "apartment": apartment,
+        "images": images,
     })
