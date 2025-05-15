@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from apartment.models import Apartment, ApartmentImages
+from favourite.models import Favourites
 from .forms.apartment_filter_form import ApartmentFilterForm
 
 
@@ -49,6 +50,7 @@ def index(request):
 
 def get_apartment_by_id(request, apartment_id):
     apartment = Apartment.objects.get(id=apartment_id)
+    user_profile = request.user.userprofile
 
     # Format price
     apartment.formatted_price = f"{apartment.price:,.0f}".replace(",", ".")
@@ -56,6 +58,11 @@ def get_apartment_by_id(request, apartment_id):
     # Get all images for this apartment
     images = ApartmentImages.objects.filter(apartment=apartment)
 
+    # Is the apartment favourites
+    apartment.is_favourited = Favourites.objects.filter(
+        user=user_profile,
+        apartment=apartment
+    ).exists()
     return render(request, 'apartments/apartment_detail.html', {
         "apartment": apartment,
         "images": images,
