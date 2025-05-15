@@ -7,14 +7,13 @@
   padding: 0 1rem;
   font-family: sans-serif;
   color: #333;
-  margin-top: -1.7rem;
+  margin-top: -2rem;
 }
 
 /* Title */
 .apartment-title {
   font-size: 2rem;
   margin-bottom: 1.5rem;
-  font-family: "Berlin Sans FB";
 
 }
 
@@ -56,13 +55,11 @@
 }
 
 .detail-label-apartment-detail {
-  font-family: "Berlin Sans FB";
-  font-weight: 1000;
+  font-weight: 600;
   color: #007bff;
 }
 
 .detail-value {
-  font-family: "Berlin Sans FB";
   color: #007bff;
 }
 
@@ -103,11 +100,11 @@
 }
 
 .go-back-button {
+  font-size: 25px;
   background-color: #007bff;
   color: #ffffff;
   padding: 0.4rem;
   border-radius: 5px;
-  font-family: "Berlin Sans FB";
 }
 
 .apartment-price {
@@ -117,7 +114,6 @@
 
 .price-detail-value {
   font-size: 40px;
-  font-family: "Berlin Sans FB";
 }
 
 .favourite-and-offer-buttons {
