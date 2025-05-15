@@ -81,6 +81,8 @@
   transform: scale(1.03);
 }
 
+
+
 /* Card content */
 .card-content {
   padding: 20px;
@@ -125,6 +127,7 @@
   font-size: 1rem;
   font-weight: 500;
   color: var(--dark-gray);
+  text-transform: capitalize;
 }
 
 /* Button */
@@ -147,6 +150,20 @@
 .card-button:hover {
   background-color: #0056b3;
 
+}
+
+.resubmit-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* center button and status text horizontally */
+}
+
+
+.resubmit-container .status-text {
+  font-size: 0.85rem;
+  color: var(--light-gray);
+  text-align: center;
+  margin-top: 8px;
 }
 
 /* No apartments message */
@@ -283,9 +300,9 @@
 .favourite-and-offer-buttons {
   display: flex;
   justify-content: center;
-  align-items: center;
   gap: 1rem;
   margin-left: -8rem;
+  align-items: flex-start;
 }
 
 .apartment-bottom-row {
@@ -360,3 +377,24 @@ border: 2px solid transparent;
   border-color: var(--primary);
 }
 
+/* ------------------ */
+/*  Filter Form.      */
+/* ------------------ */
+.filter-form {
+  width: 100%;
+  max-width: 100%;
+  padding: 1.5rem;
+  margin: 2rem 0;
+  background: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: flex-end;
+}
+
+.filter-form p {
+  margin: 0;
+  flex: 1 1 200px;
+}

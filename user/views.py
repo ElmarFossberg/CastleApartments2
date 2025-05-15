@@ -1,5 +1,6 @@
 from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import render, redirect
+from django.contrib import messages
 
 from apartment.models import Apartment
 from user.forms.profile_form import  ProfileForm
@@ -73,16 +74,19 @@ def profile(request):
     # SIDE NOTE: It should be impossible to be neither so else is not needed
 
     # Code to update the profile through POST method
+    success = False
     if request.method == 'POST' and form.is_valid():
         obj = form.save(commit=False)
         if not hasattr(prof, prof.user_type):  # if buyer/seller does not exist yet
             obj.profile = prof
         obj.save()
-        return redirect('profile')
+        success = True
+
     # Render the html and send relevant data
     return render(request, 'user/profile.html', {
         'profile': prof,
         'form': form,
+        "success": success,
     })
 
 def get_seller_by_id(request, profile_id):

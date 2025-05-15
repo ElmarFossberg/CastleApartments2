@@ -1,5 +1,10 @@
 from django import forms
 from apartment.models import ApartmentType, PostalCode
+SORT_CHOICES = [
+    ('date', 'Newest first'),
+    ('price_asc', 'Price (low to high)'),
+    ('price_desc', 'Price (high to low)'),
+]
 
 class ApartmentFilterForm(forms.Form):
     address = forms.CharField(
@@ -16,4 +21,10 @@ class ApartmentFilterForm(forms.Form):
         choices=[('', 'Any'), ('true', 'Yes'), ('false', 'No')],
         required=False,
         widget=forms.RadioSelect
+    )
+    sort = forms.ChoiceField(
+        choices=SORT_CHOICES,
+        required=False,
+        label="Sort by",
+        initial="date"
     )
