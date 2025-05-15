@@ -42,6 +42,23 @@
                     {% if apartment.sold %}Sold{% else %}Available{% endif %}
                 </span>
             </div>
+            
+            <div class="detail-row full-width">
+                <span class="detail-label">Address:</span>
+                <span class="detail-value">{{ apartment.address }}, {{ apartment.postal_code }}</span>
+            </div>
+            
+            <a class="button" href="javascript:history.back()">Go back</a>
+            <button class="button">Submit a purchase offer</button>
+            <form method="post" action="{% url 'favourite' %}">
+                {% csrf_token %}
+                <input type="hidden" name="apartment_id" value="{{ apartment.id }}">
+                {% if apartment.is_favourited %}
+                    <button class="button" type="submit">Unfavourite</button>
+                {% else %}
+                    <button class="button" type="submit">Favourite</button>
+                {% endif %}
+            </form>
         </div>
 
     <div class="apartment-price">
