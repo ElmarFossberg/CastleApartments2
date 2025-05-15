@@ -47,7 +47,15 @@
             
             <a class="button" href="javascript:history.back()">Go back</a>
             <button class="button">Submit a purchase offer</button>
-            <button class="button">Favourite</button>
+            <form method="post" action="{% url 'favourite' %}">
+                {% csrf_token %}
+                <input type="hidden" name="apartment_id" value="{{ apartment.id }}">
+                {% if apartment.is_favourited %}
+                    <button class="button" type="submit">Unfavourite</button>
+                {% else %}
+                    <button class="button" type="submit">Favourite</button>
+                {% endif %}
+            </form>
         </div>
     </div>
     
