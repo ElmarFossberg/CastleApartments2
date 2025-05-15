@@ -90,6 +90,19 @@
   border-radius: 8px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.05);
 }
+
+.apartment-seller-information {
+  display: flex;
+  flex-direction: column;   /* ← stack the children vertically */
+  align-items: flex-start;  /* ← left-align them (optional) */
+  gap: 0.5rem;              /* ← adds a little breathing room between each button */
+  margin-top: 2rem;
+  background: #fff;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
 .apartment-description h2 {
   margin-bottom: 1rem;
   font-size: 1.5rem;
@@ -124,3 +137,8 @@
   margin-left: -8rem;
 }
 
+.apartment-bottom-row {
+  display: flex;
+  gap: 1rem;              /* space between the two cards */
+  margin-top: 2rem;        /* same as you had on the cards themselves */
+}
