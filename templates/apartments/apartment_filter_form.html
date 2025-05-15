@@ -1,0 +1,21 @@
+<form method="GET" action="{% url 'apartment-index' %}" class="filter-form">
+  <p>{{ form.address.label_tag }} {{ form.address }}</p>
+  <p>{{ form.min_price.label_tag }} {{ form.min_price }}</p>
+  <p>{{ form.max_price.label_tag }} {{ form.max_price }}</p>
+  <p>{{ form.min_square_meters.label_tag }} {{ form.min_square_meters }}</p>
+  <p>{{ form.max_square_meters.label_tag }} {{ form.max_square_meters }}</p>
+  <p>{{ form.type.label_tag }} {{ form.type }}</p>
+  <p>{{ form.postal_code.label_tag }} {{ form.postal_code }}</p>
+  <p>{{ form.sort.label_tag }} {{ form.sort }}</p>
+
+  <p>{{ form.sold.label }}:
+    {% for radio in form.sold %}
+      <label style="display: inline-block; margin-right: 10px;">
+        {{ radio.tag }} {{ radio.choice_label }}
+      </label>
+    {% endfor %}
+  </p>
+
+  <button class="button" type="submit">Filter</button>
+  <a class="button" href="/"><button type="reset">Reset</button></a>
+</form>

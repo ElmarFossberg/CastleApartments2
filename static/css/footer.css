@@ -13,12 +13,6 @@
   margin-bottom: 2rem;
 }
 
-.footer-logo .logo {
-  font-size: 1.5rem;
-  font-weight: 700;
-  margin-bottom: 1rem;
-  display: inline-block;
-}
 
 .footer-text {
   color: var(--secondary);
@@ -28,7 +22,7 @@
 .footer-heading {
   font-size: 1.2rem;
   margin-bottom: 1.5rem;
-  color: var(--text);
+  color: var(--dark-gray)
 }
 
 .footer-nav {
@@ -63,26 +57,6 @@
   text-align: center;
 }
 
-.footer-social {
-  display: flex;
-  gap: 1rem;
-}
-
-.social-icon {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 32px;
-  height: 32px;
-  background-color: var(--light-gray);
-  border-radius: 50%;
-  transition: all 0.3s ease;
-}
-
-.social-icon:hover {
-  background-color: var(--primary);
-  color: white;
-}
 
 @media (min-width: 768px) {
   .footer-bottom {

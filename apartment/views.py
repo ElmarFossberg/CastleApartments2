@@ -8,46 +8,56 @@ from .forms.apartment_filter_form import ApartmentFilterForm
 
 # Create your views here.
 def index(request):
-    #Get the Form
+    #Get the forms
     form = ApartmentFilterForm(request.GET)
-    #Get all apartments
     apartments = Apartment.objects.all()
 
     if form.is_valid():
+        #shorthand
+        cd = form.cleaned_data
+
         # Apply filters
-        if form.cleaned_data['address']:
-            apartments = apartments.filter(address__icontains=form.cleaned_data['address'])
-        if form.cleaned_data['min_price']:
-            apartments = apartments.filter(price__gte=form.cleaned_data['min_price'])
-        if form.cleaned_data['max_price']:
-            apartments = apartments.filter(price__lte=form.cleaned_data['max_price'])
-        if form.cleaned_data['min_square_meters']:
-            apartments = apartments.filter(square_meters__gte=form.cleaned_data['min_square_meters'])
-        if form.cleaned_data['max_square_meters']:
-            apartments = apartments.filter(square_meters__lte=form.cleaned_data['max_square_meters'])
-        if form.cleaned_data['type']:
-            apartments = apartments.filter(type=form.cleaned_data['type'])
-        if form.cleaned_data['postal_code']:
-            apartments = apartments.filter(postal_code=form.cleaned_data['postal_code'])
-        if form.cleaned_data['sold'] != '':
-            apartments = apartments.filter(sold=(form.cleaned_data['sold'] == 'true'))
+        if cd['address']:
+            apartments = apartments.filter(address__icontains=cd['address'])
+        if cd['min_price']:
+            apartments = apartments.filter(price__gte=cd['min_price'])
+        if cd['max_price']:
+            apartments = apartments.filter(price__lte=cd['max_price'])
+        if cd['min_square_meters']:
+            apartments = apartments.filter(square_meters__gte=cd['min_square_meters'])
+        if cd['max_square_meters']:
+            apartments = apartments.filter(square_meters__lte=cd['max_square_meters'])
+        if cd['type']:
+            apartments = apartments.filter(type=cd['type'])
+        if cd['postal_code']:
+            apartments = apartments.filter(postal_code=cd['postal_code'])
+        if cd['sold'] != '':
+            apartments = apartments.filter(sold=(cd['sold'] == 'true'))
 
-    #Sorting
-    apartments = apartments.order_by('-listing_date', 'sold')
+        # Sorting
+        sort = cd.get('sort')
+        if sort == 'price_asc':
+            apartments = apartments.order_by('price')
+        elif sort == 'price_desc':
+            apartments = apartments.order_by('-price')
+        elif sort == 'date':
+            apartments = apartments.order_by('-listing_date')
+        else:
+            apartments = apartments.order_by('-listing_date', 'sold')  # default
 
-    #Format
+    # Format
     for apartment in apartments:
         image = ApartmentImages.objects.filter(apartment=apartment).first()
-        # Add the first image
         apartment.image = image.image if image else "https://developers.elementor.com/docs/assets/img/elementor-placeholder-image.png"
-        # Format the price
         apartment.formatted_price = f"{apartment.price:,.0f}".replace(",", ".")
         apartment.number_of_rooms = apartment.number_of_bathrooms + apartment.number_of_bedrooms
         apartment.save()
+
     return render(request, 'apartments/apartments.html', {
         "apartments": apartments,
         "form": form
     })
+
 
 
 def get_apartment_by_id(request, apartment_id):
@@ -63,6 +73,8 @@ def get_apartment_by_id(request, apartment_id):
     apartment.is_favourited = False
     apartment.already_has_purchase_offer = False
     user_type = None
+    purchase_offer = None
+    seller_profile = None
 
     # Make sure the app dosent crash if user is not logged in
     if request.user.is_authenticated:
@@ -83,18 +95,22 @@ def get_apartment_by_id(request, apartment_id):
         ).exists()
         # If user is a buyer does he already have an offer?
         if buyer:
-            apartment.already_has_purchase_offer = PurchaseOffer.objects.filter(
-                buyer=buyer,
-                apartment=apartment
-            ).exists()
-
+            # Get purchase offer info
+            try:
+                purchase_offer = PurchaseOffer.objects.get(buyer=buyer, apartment=apartment)
+            except PurchaseOffer.DoesNotExist:
+                purchase_offer = None
         # Get seller info
-        seller = Seller.objects.get(id=apartment.seller_id)
-        seller_profile = seller.profile  # This is the UserProfile instance
+        try:
+            seller = Seller.objects.get(id=apartment.seller_id)
+            seller_profile = seller.profile
+        except Seller.DoesNotExist:
+            seller_profile = None
 
     return render(request, 'apartments/apartment_detail.html', {
         "apartment": apartment,
         "images": images,
         "user_type": user_type,
         "seller_profile": seller_profile,
+        "purchase_offer": purchase_offer,
     })

@@ -1,11 +1,8 @@
 {% extends "base.html" %}
 {% block content %}
   <div class="apartments-container">
-      <h1 class="apartments-title">Available Properties</h1>
-      <form method="GET" action="{% url 'apartment-index' %}">
-        {{ form.as_p }}  <!-- Render the filter form -->
-        <button type="submit">Filter</button>
-      </form>
+    <h1 class="apartments-title">Available Properties</h1>
+    {% include "apartments/apartment_filter_form.html" %}
     <section class="apartments-grid">
       {% for apartment in apartments %}
         <div class="apartment-card {% if apartment.sold %}sold{% endif %}">

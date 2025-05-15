@@ -63,10 +63,15 @@
                 <span class="detail-label-apartment-detail">Bathrooms:</span>
                 <span class="detail-value">{{ apartment.number_of_bathrooms }}</span>
             </div>
-            
+
+            <div class="detail-row full-width">
+                <span class="detail-label-apartment-detail">City:</span>
+                <span class="detail-value-status">{{ apartment.postal_code.city_name }}</span>
+            </div>
+
             <div class="detail-row full-width">
                 <span class="detail-label-apartment-detail">Postal Code:</span>
-                <span class="detail-value-status">{{ apartment.postal_code }} {{ apartment.postal_code.city_name }}</span>
+                <span class="detail-value-status">{{ apartment.postal_code }}</span>
             </div>
 
             <div class="detail-row">
@@ -85,30 +90,34 @@
             </div>
     <div class="favourite-and-offer-buttons">
          <!-- Check if the user is a buyer if so show the purchase offers -->
-                {% if user_type == 'buyer' %}
-                    <!-- Check if property is sold -->
-                    {% if not apartment.sold %}
-                       <!-- Check if user has submitted an offer (dynamic text)-->
-                        {% if apartment.already_has_purchase_offer %}
-                            <a class="button" href="/my-offers/create?apartment_id={{ apartment.id }}">Resubmit a purchase offer</a>
+            {% if user_type == 'buyer' %}
+                {% if not apartment.sold %}
+                    <div class="resubmit-container">
+                    <a class="button" href="/my-offers/create?apartment_id={{ apartment.id }}">
+                        {% if purchase_offer %}
+                            Resubmit a purchase offer
                         {% else %}
-                            <a class="button" href="/my-offers/create?apartment_id={{ apartment.id }}">Submit a purchase offer</a>
+                            Submit a purchase offer
                         {% endif %}
+                    </a>
+                    {% if purchase_offer %}
+                        <div class="status-text">({{ purchase_offer.status }})</div>
                     {% endif %}
+                    </div>
                 {% endif %}
-        <!-- Favourite button -->
-        <form method="post" action="{% url 'favourite' %}">
-                  {% csrf_token %}
+            {% endif %}
+            <!-- Favourite button -->
+            <form method="post" action="{% url 'favourite' %}">
+                {% csrf_token %}
                     <input type="hidden" name="apartment_id" value="{{ apartment.id }}">
                     {% if apartment.is_favourited %}
                         <button class="button" type="submit">Unfavourite</button>
                     {% else %}
                         <button class="button" type="submit" >Favourite</button>
                     {% endif %}
-                </form>
+            </form>
+        </div>
     </div>
-    </div>
-
     <div class="apartment-bottom-row">
         <!-- EL ég setti bara myndina og nafnið þú breytir svo the info eg gerði þetta bara svona þannig easy að cssa og gera nett -->
         <div class="apartment-seller-information">
@@ -121,8 +130,7 @@
 
         <div class="apartment-description">
             <h2>Description</h2>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam in dui mauris. Vivamus hendrerit arcu sed erat molestie vehicula. Sed auctor neque eu tellus rhoncus ut eleifend nibh porttitor.</p>
-            <!-- In a real app, you'd have a description field in your model -->
+            <p>{{ apartment.description }}</p>
         </div>
     </div>
 </div>
