@@ -110,11 +110,12 @@
     </div>
 
     <div class="apartment-bottom-row">
-
+        <!-- EL ég setti bara myndina og nafnið þú breytir svo the info eg gerði þetta bara svona þannig easy að cssa og gera nett -->
         <div class="apartment-seller-information">
             <h2>Seller information</h2>
-            <button class="button">Name: {{ apartment.seller }}</button>
-            <button class="button">Go to seller profile<a></a></button>
+            <p>Name: {{ seller_profile.full_name }}</p>
+            <img src="{{ seller_profile.profile_image }}" alt="{{ seller_profile.full_name }}" />
+            <a href="user/seller/{{ seller_profile.id }}" class="button">Go to seller profile</a>
 
         </div>
 

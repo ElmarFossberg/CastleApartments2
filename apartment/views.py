@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from apartment.models import Apartment, ApartmentImages
-from user.models import User, Buyer
+from user.models import Seller, Buyer
 from favourite.models import Favourites
 from purchaseOffer.models import PurchaseOffer
 from .forms.apartment_filter_form import ApartmentFilterForm
@@ -88,8 +88,13 @@ def get_apartment_by_id(request, apartment_id):
                 apartment=apartment
             ).exists()
 
+        # Get seller info
+        seller = Seller.objects.get(id=apartment.seller_id)
+        seller_profile = seller.profile  # This is the UserProfile instance
+
     return render(request, 'apartments/apartment_detail.html', {
         "apartment": apartment,
         "images": images,
-        "user_type": user_type
+        "user_type": user_type,
+        "seller_profile": seller_profile,
     })

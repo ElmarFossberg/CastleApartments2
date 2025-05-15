@@ -10,4 +10,6 @@ urlpatterns = [
     path('logout', LogoutView.as_view(next_page='apartment-index'), name='logout'),
 
     path('profile', views.profile, name='profile'),
+
+    path('seller/<int:profile_id>/', views.get_seller_by_id, name='seller_by_id')
 ]

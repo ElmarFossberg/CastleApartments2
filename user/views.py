@@ -1,9 +1,11 @@
 from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import render, redirect
+
+from apartment.models import Apartment
 from user.forms.profile_form import  ProfileForm
 
-from user.models import UserProfile
-from user.forms.profile_form import  BuyerForm, SellerForm, RealEstateFirmForm
+from user.models import UserProfile, Seller, RealEstateFirm
+from user.forms.profile_form import  BuyerForm, SellerForm
 from django.contrib.auth.decorators import login_required
 
 
@@ -81,4 +83,21 @@ def profile(request):
     return render(request, 'user/profile.html', {
         'profile': prof,
         'form': form,
+    })
+
+def get_seller_by_id(request, profile_id):
+    profile = UserProfile.objects.get(id=profile_id)
+    seller = Seller.objects.get(profile=profile)
+    apartments = Apartment.objects.filter(seller=seller)  # use filter, not get
+    seller_profile = seller.profile
+    try:
+        real_estate_firm = RealEstateFirm.objects.get(seller=seller)
+    except RealEstateFirm.DoesNotExist:
+        real_estate_firm = None
+
+    return render(request, 'user/seller.html', {
+        "apartments": apartments,
+        "seller": seller,
+        "seller_profile": seller_profile,
+        "real_estate_firm": real_estate_firm,
     })
