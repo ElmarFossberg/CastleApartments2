@@ -21,6 +21,9 @@ class Apartment(models.Model):
     postal_code = models.ForeignKey(PostalCode, on_delete=models.PROTECT, db_column='postal_code')
     address = models.CharField(max_length=255)
     price = models.DecimalField(max_digits=13, decimal_places=2)
+    def formatted_price(self):
+        # e.g.  94500000 → "94.500.000"
+        return f"{self.price:,.0f}".replace(",", ".")
     square_meters = models.DecimalField(max_digits=4, decimal_places=0)
     number_of_bathrooms = models.DecimalField(max_digits=4, decimal_places=0, default=0)
     number_of_bedrooms = models.DecimalField(max_digits=4, decimal_places=0, default=0)
