@@ -7,23 +7,31 @@
   padding: 0 1rem;
   font-family: sans-serif;
   color: #333;
+  margin-top: -1.7rem;
 }
 
 /* Title */
 .apartment-title {
   font-size: 2rem;
   margin-bottom: 1.5rem;
+  font-family: "Berlin Sans FB";
+
 }
 
 /* Info grid: image + details */
 .apartment-info-grid {
   display: grid;
-  grid-template-columns: 1fr 2fr;
-  gap: 2rem;
+  grid-template-columns: 3fr 1.3fr;
+  gap: 1rem;
   background: #fff;
-  padding: 1.5rem;
   border-radius: 8px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  padding-bottom: 1rem;
+  padding-top: 1.5rem;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+  padding-inline: -1rem;
+
 }
 
 /* Image placeholder */
@@ -44,31 +52,18 @@
   display: flex;
   justify-content: space-between;
   margin-bottom: 0.75rem;
+  margin-top: 0.75rem;
 }
 
-/* If you want labels & values stacked on small screens: */
-/*
-@media (max-width: 600px) {
-  .apartment-info-grid {
-    grid-template-columns: 1fr;
-  }
-  .apartment-details .detail-row {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-  .apartment-details .detail-value {
-    margin-top: 0.25rem;
-  }
-}
-*/
-
-.detail-label {
-  font-weight: 600;
-  color: #555;
+.detail-label-apartment-detail {
+  font-family: "Berlin Sans FB";
+  font-weight: 1000;
+  color: #007bff;
 }
 
 .detail-value {
-  color: #111;
+  font-family: "Berlin Sans FB";
+  color: #007bff;
 }
 
 /* Status badge coloring */
@@ -79,7 +74,10 @@
     padding: 0.5rem;
 }
 .detail-value.sold {
-  color: #c0392b;
+  color: #ffffff;
+  background-color: crimson;
+  border-radius: 5px;
+    padding: 0.5rem;
 }
 
 /* Full-width row for address */
@@ -103,3 +101,30 @@
   line-height: 1.6;
   color: #444;
 }
+
+.go-back-button {
+  background-color: #007bff;
+  color: #ffffff;
+  padding: 0.4rem;
+  border-radius: 5px;
+  font-family: "Berlin Sans FB";
+}
+
+.apartment-price {
+  padding-top: -2rem;
+
+}
+
+.price-detail-value {
+  font-size: 40px;
+  font-family: "Berlin Sans FB";
+}
+
+.favourite-and-offer-buttons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  margin-left: -8rem;
+}
+

@@ -1,6 +1,9 @@
 {% extends 'base.html' %}
-
+{% load static %}
 {% block content %}
+<div>
+    <a class="go-back-button" href="javascript:history.back()"><i class="fa fa-arrow-left"></i> Go back</a>
+</div>
 <div class="apartment-detail-container">
     <h1 class="apartment-title">{{ apartment.address }}, {{ apartment.postal_code }} </h1>
     
@@ -8,33 +11,33 @@
         <div class="apartment-image">
             <!-- Placeholder for image - in a real app you'd have an image field in your model -->
             <div class="image-placeholder">
-            <img src="{{ images.0.image }}" alt="gerðueihherHugi" />
+            <img src="{{ images.0.image }}" alt="{{ apartment.address }}" />
             </div>
         </div>
         
         <div class="apartment-details">
             <div class="detail-row">
-                <span class="detail-label">Type:</span>
+                <span class="detail-label-apartment-detail">Type:</span>
                 <span class="detail-value">{{ apartment.type }}</span>
             </div>
             
             <div class="detail-row">
-                <span class="detail-label">Price:</span>
-                <span class="detail-value">{{ apartment.formatted_price }} kr.</span>
-            </div>
-            
-            <div class="detail-row">
-                <span class="detail-label">Size:</span>
+                <span class="detail-label-apartment-detail">Size:</span>
                 <span class="detail-value">{{ apartment.square_meters }} m²</span>
             </div>
             
             <div class="detail-row">
-                <span class="detail-label">Rooms:</span>
+                <span class="detail-label-apartment-detail">Rooms:</span>
                 <span class="detail-value">{{ apartment.number_of_rooms }}</span>
             </div>
             
+            <div class="detail-row full-width">
+                <span class="detail-label-apartment-detail">Postal Code:</span>
+                <span class="detail-value-status">{{ apartment.postal_code }} {{ apartment.postal_code.city_name }}</span>
+            </div>
+
             <div class="detail-row">
-                <span class="detail-label">Status:</span>
+                <span class="detail-label-apartment-detail">Status:</span>
                 <span class="detail-value {% if apartment.sold %}sold{% else %}available{% endif %}">
                     {% if apartment.sold %}Sold{% else %}Available{% endif %}
                 </span>
@@ -57,6 +60,15 @@
                 {% endif %}
             </form>
         </div>
+
+    <div class="apartment-price">
+                <span class="price-detail-value">{{ apartment.formatted_price }} kr.</span>
+
+            </div>
+    <div class="favourite-and-offer-buttons">
+        <button class="button">Submit a purchase offer</button>
+        <button class="button">Favourite</button>
+    </div>
     </div>
     
     <div class="apartment-description">
