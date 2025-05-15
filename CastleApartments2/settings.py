@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'apartment.apps.ApartmentConfig',
     'user.apps.UserConfig',
     'favourite.apps.FavouriteConfig',
+    'purchaseOffer.apps.PurchaseofferConfig'
 ]
 
 MIDDLEWARE = [
@@ -132,4 +133,4 @@ STATICFILES_DIRS = [
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LOGIN_REDIRECT_URL = '/user/profile'
-LOGIN_URL = '/'
+LOGIN_URL = '/user/login'

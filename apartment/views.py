@@ -29,6 +29,9 @@ def index(request):
         if form.cleaned_data['sold'] != '':
             apartments = apartments.filter(sold=(form.cleaned_data['sold'] == 'true'))
 
+    #Sorting
+    apartments = apartments.order_by('-listing_date', 'sold')
+
     #Format
     for apartment in apartments:
         image = ApartmentImages.objects.filter(apartment=apartment).first()
