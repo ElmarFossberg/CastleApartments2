@@ -8,12 +8,35 @@
     <h1 class="apartment-title">{{ apartment.address }}, {{ apartment.postal_code }} </h1>
     
     <div class="apartment-info-grid">
-        <div class="apartment-image">
-            <!-- Placeholder for image - in a real app you'd have an image field in your model -->
-            <div class="image-placeholder">
-            <img src="{{ images.0.image }}" alt="{{ apartment.address }}" />
+      <div class="apartment-image">
+        <!-- Slider gallery for all images -->
+        <div class="apartment-slider">
+          {% for img in images %}
+            <div class="slide{% if forloop.first %} active{% endif %}">
+              <img
+                src="{{ img.image }}"
+                alt="{{ apartment.address }} ({{ forloop.counter }})"
+              />
             </div>
+          {% endfor %}
+
+          <!-- Prev / Next controls -->
+          <button class="prev">‹</button>
+          <button class="next">›</button>
+
+          <!-- Thumbnails -->
+          <div class="thumbnails">
+            {% for img in images %}
+              <img
+                class="thumb{% if forloop.first %} current{% endif %}"
+                src="{{ img.image }}"
+                data-index="{{ forloop.counter0 }}"
+                alt="Thumb {{ forloop.counter }}"
+              />
+            {% endfor %}
+          </div>
         </div>
+      </div>
         
         <div class="apartment-details">
             <div class="detail-row">

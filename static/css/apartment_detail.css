@@ -142,3 +142,70 @@
   gap: 1rem;              /* space between the two cards */
   margin-top: 2rem;        /* same as you had on the cards themselves */
 }
+
+
+.apartment-slider {
+  position: relative;
+  width: 100%;
+  height: 425px;
+  max-width: 550px;
+}
+
+.apartment-slider .slide {
+  display: none;
+  width: 100%;
+}
+
+.apartment-slider .slide.active {
+  display: block;
+}
+
+.apartment-slider .slide img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Prev/Next buttons */
+.apartment-slider .prev,
+.apartment-slider .next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0,0,0,0.4);
+  color: #fff;
+  border: none;
+  padding: 0.4rem 0.8rem;
+  cursor: pointer;
+  font-size: 1.2rem;
+  z-index: 2;
+}
+.apartment-slider .prev { left: 0.5rem; }
+.apartment-slider .next { right: 0.5rem; }
+
+/* Thumbnails row */
+.apartment-slider .thumbnails {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+  overflow: scroll;
+  overflow-y: hidden;
+
+  overflow-x: auto;       /* enable horizontal scroll when needed */
+  padding-bottom: 0.5rem; /* room for the scrollbar */
+  scrollbar-width: thin;  /* Firefox: thinner scrollbar */
+}
+.apartment-slider .thumb {
+  flex: 0 0 auto;      /* keep them from shrinking or growing */
+  width: 60px;
+  height: 40px;
+  object-fit: cover;
+  opacity: 0.6;
+  cursor: pointer;
+border: 2px solid transparent;
+}
+ .apartment-slider .thumb.current {
+  opacity: 1;
+  border-color: #007bff;
+}
+
