@@ -7,7 +7,6 @@ class PurchaseOffer(models.Model):
         ('pending', 'Pending'),
         ('accepted', 'Accepted'),
         ('rejected', 'Rejected'),
-        ('contingent', 'Contingent'),
     ]
 
     apartment = models.ForeignKey('apartment.Apartment', on_delete=models.CASCADE)
