@@ -56,12 +56,8 @@
 
 .detail-label-apartment-detail {
   font-weight: 600;
-  color: #007bff;
 }
 
-.detail-value {
-  color: #007bff;
-}
 
 /* Status badge coloring */
 .detail-value.available {
@@ -113,7 +109,7 @@
 }
 
 .go-back-button {
-  font-size: 25px;
+  font-size: 1rem;
   background-color: #007bff;
   color: #ffffff;
   padding: 0.4rem;
@@ -126,7 +122,7 @@
 }
 
 .price-detail-value {
-  font-size: 40px;
+  font-size: 1.5rem;
 }
 
 .favourite-and-offer-buttons {

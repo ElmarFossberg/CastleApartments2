@@ -13,7 +13,7 @@
         <div class="apartment-slider">
           {% for img in images %}
             <div class="slide{% if forloop.first %} active{% endif %}">
-              <img
+              <img class="apartment-image"
                 src="{{ img.image }}"
                 alt="{{ apartment.address }} ({{ forloop.counter }})"
               />
