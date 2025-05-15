@@ -1,6 +1,6 @@
 .footer {
-  background-color: var(--white);
-  color: var(--text);
+  background-color: white;
+  color: black;
   padding: 3rem 4rem 0;
   box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
   margin-top: auto;
@@ -81,7 +81,7 @@
 
 .social-icon:hover {
   background-color: var(--primary);
-  color: var(--white);
+  color: white;
 }
 
 @media (min-width: 768px) {

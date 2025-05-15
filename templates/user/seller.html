@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+ <h1>Seller: {{ seller_profile.full_name }}</h1>
+    <p>Email: {{ seller_profile.email }}</p>
+    <p>Phone: {{ seller_profile.phone }}</p>
+    {% if real_estate_firm %}
+        <h2>{{ real_estate_firm.firm_name }}</h2>
+        <h3>{{ real_estate_firm.firm_address }}</h3>
+    {% endif %}
+    <p></p>
+    <h2>Apartments:</h2>
+    <ul>
+        {% for apt in apartments %}
+            <li>{{ apt.address }} – {{ apt.price }} ISK</li>
+        {% empty %}
+            <li>No apartments found for this seller.</li>
+        {% endfor %}
+    </ul>
+{% endblock %}

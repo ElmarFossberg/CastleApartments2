@@ -40,7 +40,12 @@
           </div>
         </div>
       {% empty %}
-        <p class="no-apartments">No apartments found.</p>
+          <div class="no-favorites-container">
+         <div class="no-favorites">
+          <p class="no-apartments">No apartments favourited.</p>
+          <a href="/" class="button">Browse</a>
+         </div>
+        </div>
       {% endfor %}
     </section>
   </div>
