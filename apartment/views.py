@@ -1,6 +1,8 @@
 from django.shortcuts import render
 from apartment.models import Apartment, ApartmentImages
+from user.models import User, Buyer
 from favourite.models import Favourites
+from purchaseOffer.models import PurchaseOffer
 from .forms.apartment_filter_form import ApartmentFilterForm
 
 
@@ -50,7 +52,6 @@ def index(request):
 
 def get_apartment_by_id(request, apartment_id):
     apartment = Apartment.objects.get(id=apartment_id)
-    user_profile = request.user.userprofile
 
     # Format price
     apartment.formatted_price = f"{apartment.price:,.0f}".replace(",", ".")
@@ -58,12 +59,37 @@ def get_apartment_by_id(request, apartment_id):
     # Get all images for this apartment
     images = ApartmentImages.objects.filter(apartment=apartment)
 
-    # Is the apartment favourites
-    apartment.is_favourited = Favourites.objects.filter(
-        user=user_profile,
-        apartment=apartment
-    ).exists()
+    # Default values
+    apartment.is_favourited = False
+    apartment.already_has_purchase_offer = False
+    user_type = None
+
+    # Make sure the app dosent crash if user is not logged in
+    if request.user.is_authenticated:
+        # Get the user info
+        user_profile = request.user.userprofile
+        user_type = user_profile.user_type
+
+        # Check if user is buyer
+        try:
+            buyer = Buyer.objects.get(profile=user_profile)
+        except Buyer.DoesNotExist:
+            buyer = None
+
+        # Check if favourited
+        apartment.is_favourited = Favourites.objects.filter(
+            user=user_profile,
+            apartment=apartment
+        ).exists()
+        # If user is a buyer does he already have an offer?
+        if buyer:
+            apartment.already_has_purchase_offer = PurchaseOffer.objects.filter(
+                buyer=buyer,
+                apartment=apartment
+            ).exists()
+
     return render(request, 'apartments/apartment_detail.html', {
         "apartment": apartment,
         "images": images,
+        "user_type": user_type
     })
