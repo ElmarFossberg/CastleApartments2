@@ -144,3 +144,50 @@ main {
   border: 1px solid #c3e6cb;
   color: #155724;
 }
+
+/* -------------- /*
+/*      Error     */
+/* -------------- */
+
+.error-container {
+  display: flex;
+  justify-content: center;
+}
+.error-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  background-color: white;
+  border-radius: 16px;
+}
+
+.error-image {
+  width: 120px;
+  height: 120px;
+  margin-bottom: 1.5rem;
+  object-fit: contain;
+}
+
+.error-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #1e293b;
+  margin-bottom: 0.75rem;
+}
+
+.error-message {
+  font-size: 1.125rem;
+  color: #64748b;
+  line-height: 1.6;
+  margin-bottom: 2rem;
+}
+
+.error-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+

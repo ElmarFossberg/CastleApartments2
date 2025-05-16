@@ -1,10 +1,20 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-<h1>Error</h1>
-</body>
-</html>
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="error-container">
+    <div class="error-card">
+        <h1 class="error-title">Oops!</h1>
+        <p class="error-message">{{ message }}</p>
+        <img src="{% static 'images/error.jpg' %}" alt="Error illustration" class="error-image" />
+        <div class="error-actions">
+            <a href="{% url 'apartment-index' %}" class="button">
+              <i class="fa fa-home" aria-hidden="true"></i> Return Home
+            </a>
+            <a href="#" class="button" onclick="history.back()">
+              <i class="fa fa-arrow-left" aria-hidden="true"></i> Go Back
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}

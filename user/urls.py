@@ -11,5 +11,6 @@ urlpatterns = [
 
     path('profile', views.profile, name='profile'),
 
-    path('seller/<int:profile_id>/', views.get_seller_by_id, name='seller_by_id')
+    path('seller/<int:seller_id>/', views.get_seller_by_id, name='seller_by_id')
+
 ]

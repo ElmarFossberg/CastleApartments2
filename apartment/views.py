@@ -1,9 +1,12 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 from apartment.models import Apartment, ApartmentImages
 from user.models import Seller, Buyer
 from favourite.models import Favourites
 from purchaseOffer.models import PurchaseOffer
 from .forms.apartment_filter_form import ApartmentFilterForm
+from apartment.context import format_apartments
+
 
 
 # Create your views here.
@@ -46,12 +49,7 @@ def index(request):
             apartments = apartments.order_by('-listing_date', 'sold')  # default
 
     # Format
-    for apartment in apartments:
-        image = ApartmentImages.objects.filter(apartment=apartment).first()
-        apartment.image = image.image if image else "https://developers.elementor.com/docs/assets/img/elementor-placeholder-image.png"
-        apartment.formatted_price = f"{apartment.price:,.0f}".replace(",", ".")
-        apartment.number_of_rooms = apartment.number_of_bathrooms + apartment.number_of_bedrooms
-        apartment.save()
+    format_apartments(apartments)
 
     return render(request, 'apartments/apartments.html', {
         "apartments": apartments,
@@ -74,6 +72,7 @@ def get_apartment_by_id(request, apartment_id):
     apartment.already_has_purchase_offer = False
     user_type = None
     purchase_offer = None
+    seller = None
     seller_profile = None
 
     # Make sure the app dosent crash if user is not logged in
@@ -112,5 +111,28 @@ def get_apartment_by_id(request, apartment_id):
         "images": images,
         "user_type": user_type,
         "seller_profile": seller_profile,
+        "seller": seller,
         "purchase_offer": purchase_offer,
     })
+
+
+@login_required
+def my_properties(request):
+    user_profile = request.user.userprofile
+    if user_profile.user_type != 'seller':
+        # Not a seller, no apartments to show
+        apartments = []
+    else:
+        try:
+            seller = Seller.objects.get(profile=user_profile)
+            apartments = Apartment.objects.filter(seller_id=seller.id)
+        except Seller.DoesNotExist:
+            apartments = []
+
+        # Format
+        format_apartments(apartments)
+
+    return render(request, 'apartments/my-properties.html', {
+        'apartments': apartments
+    })
+

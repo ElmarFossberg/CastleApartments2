@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     'apartment.apps.ApartmentConfig',
     'user.apps.UserConfig',
     'favourite.apps.FavouriteConfig',
-    'purchaseOffer.apps.PurchaseofferConfig'
+    'purchaseOffer.apps.PurchaseofferConfig',
 ]
 
 MIDDLEWARE = [
@@ -66,6 +66,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'apartment.context.user_profile'
             ],
         },
     },
