@@ -144,7 +144,6 @@ def my_properties(request):
 @login_required
 def my_payments(request):
     user = request.user
-
     try:
         buyer = Buyer.objects.get(profile__user=user)
         buyer_offers = PurchaseOffer.objects.filter(buyer=buyer, finalized=True)
