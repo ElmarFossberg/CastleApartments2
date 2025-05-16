@@ -1,21 +1,71 @@
 <form method="GET" action="{% url 'apartment-index' %}" class="filter-form">
-  <p>{{ form.address.label_tag }} {{ form.address }}</p>
-  <p>{{ form.min_price.label_tag }} {{ form.min_price }}</p>
-  <p>{{ form.max_price.label_tag }} {{ form.max_price }}</p>
-  <p>{{ form.min_square_meters.label_tag }} {{ form.min_square_meters }}</p>
-  <p>{{ form.max_square_meters.label_tag }} {{ form.max_square_meters }}</p>
-  <p>{{ form.type.label_tag }} {{ form.type }}</p>
-  <p>{{ form.postal_code.label_tag }} {{ form.postal_code }}</p>
-  <p>{{ form.sort.label_tag }} {{ form.sort }}</p>
+  <div class="filter-group">
+    {{ form.address.label_tag }}
+    {{ form.address }}
+    <i class="fa fa-map-marker-alt"></i>
+  </div>
 
-  <p>{{ form.sold.label }}:
-    {% for radio in form.sold %}
-      <label style="display: inline-block; margin-right: 10px;">
-        {{ radio.tag }} {{ radio.choice_label }}
-      </label>
-    {% endfor %}
-  </p>
+  <div class="filter-group">
+    {{ form.min_price.label_tag }}
+    {{ form.min_price }}
+    <i class="fa fa-coins"></i>
+  </div>
 
-  <button class="button" type="submit">Filter</button>
-  <a class="button" href="/"><button type="reset">Reset</button></a>
+  <div class="filter-group">
+    {{ form.max_price.label_tag }}
+    {{ form.max_price }}
+    <i class="fa fa-coins"></i>
+  </div>
+
+  <div class="filter-group">
+    {{ form.min_square_meters.label_tag }}
+    {{ form.min_square_meters }}
+    <i class="fa fa-ruler-combined"></i>
+  </div>
+
+  <div class="filter-group">
+    {{ form.max_square_meters.label_tag }}
+    {{ form.max_square_meters }}
+    <i class="fa fa-ruler-combined"></i>
+  </div>
+
+  <div class="filter-group">
+    {{ form.type.label_tag }}
+    {{ form.type }}
+    <i class="fa fa-building"></i>
+  </div>
+
+  <div class="filter-group">
+    {{ form.postal_code.label_tag }}
+    {{ form.postal_code }}
+    <i class="fa fa-location-arrow"></i>
+  </div>
+
+  <div class="filter-group">
+    {{ form.sort.label_tag }}
+    {{ form.sort }}
+    <i class="fa fa-sort"></i>
+  </div>
+
+  <div class="filter-group">
+    {{ form.sold.label_tag }}
+    <div class="radio-container">
+      {% for radio in form.sold %}
+        <label class="radio-option">
+          {{ radio.choice_label }}
+          {{ radio.tag }}
+          <span class="radio-checkmark"></span>
+        </label>
+      {% endfor %}
+    </div>
+  </div>
+
+  <div class="filter-buttons">
+    <button class="button" type="submit">
+      <i class="fa fa-filter"></i> Filter
+    </button>
+    <button class="button button--secondary" type="reset">
+      <i class="fa fa-undo"></i> Reset
+    </button>
+  </div>
 </form>

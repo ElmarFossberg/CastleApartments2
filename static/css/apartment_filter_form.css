@@ -1,0 +1,139 @@
+/* --------------- overall form grid ---------------- */
+.filter-form {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1rem 1.5rem;
+  background: #fff;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  align-items: end;
+  font-family: sans-serif;
+}
+
+/* --------------- each control + icon --------------- */
+.filter-group {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.filter-group label {
+  display: block;
+  margin-bottom: 0.25rem;
+  font-weight: 600;
+  color: #333;
+}
+
+.filter-group input,
+.filter-group select {
+  width: 100%;
+  padding: 0.6rem 2.5rem 0.6rem 0.75rem;
+  font-size: 0.95rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  appearance: none;
+  background-color: #f9f9f9;
+}
+
+/* FontAwe­some icon on the right */
+.filter-group i.fa {
+  position: absolute;
+  right: 0.75rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #888;
+  pointer-events: none;
+  font-size: 1.1rem;
+}
+
+/* ------------- buttons ------------- */
+.filter-buttons {
+  grid-column: span 5;
+  display: flex;
+  gap: 1rem;
+  justify-content: end;
+  margin-top: 0.5rem;
+}
+
+.filter-buttons .button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.6rem 1.2rem;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.filter-buttons .button--secondary {
+  background: #eee;
+  color: #333;
+}
+
+.filter-buttons .button:not(.button--secondary) {
+  background: #007bff;
+  color: #fff;
+}
+
+/* ------------- radio button styles ------------- */
+.radio-container {
+  padding: 0.6rem 0.75rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #f9f9f9;
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  height: 100%;
+  margin-left: 0.3rem;
+  margin-right: -2.8rem;
+}
+
+.radio-option {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  position: relative;
+  cursor: pointer;
+  font-weight: normal;
+  flex-direction: row-reverse;
+}
+
+.radio-option input[type="radio"] {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.radio-checkmark {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  border: 2px solid #888;
+  border-radius: 50%;
+  position: relative;
+}
+
+.radio-option input:checked ~ .radio-checkmark {
+  border-color: #007bff;
+}
+
+.radio-option input:checked ~ .radio-checkmark::after {
+  content: "";
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #007bff;
+}
+
+/* Remove default form select arrow */
+.filter-group select {
+  background-image: none;
+}
