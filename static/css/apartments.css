@@ -175,7 +175,6 @@
   padding: 40px 0;
 }
 
-<<<<<<< HEAD
 /* === Apartment Detail Page Styles === */
 
 .apartment-detail-container {
@@ -294,7 +293,7 @@
   font-size: 1rem;
   line-height: 1.6;
   color: #555;
-=======
+}
 .apartment-image {
   min-height: 375px;
   object-fit: cover;
@@ -517,5 +516,4 @@ border: 2px solid transparent;
 .filter-form p {
   margin: 0;
   flex: 1 1 200px;
->>>>>>> 88ed154d72e52ab53af43ad06f432f52cca7de48
 }
