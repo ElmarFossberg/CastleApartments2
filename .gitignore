@@ -10,10 +10,12 @@
 __pycache__/
 
 # Ignore virtual environment folders
-venv/
+.venv
 env/
-.venv/
-.env/
+venv/
+ENV/
+env.bak/
+venv.bak/
 
 # Ignore log files
 *.log

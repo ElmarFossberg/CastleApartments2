@@ -1,8 +1,9 @@
 {% extends "base.html" %}
+{% load static %}
+
 {% block content %}
   <div class="apartments-container">
-    <h1 class="apartments-title">Available Properties</h1>
-    {% include "apartments/apartment_filter_form.html" %}
+      <h1 class="apartments-title">My favourites</h1>
     <section class="apartments-grid">
       {% for apartment in apartments %}
         <div class="apartment-card {% if apartment.sold %}sold{% endif %}">
@@ -39,7 +40,12 @@
           </div>
         </div>
       {% empty %}
-        <p class="no-apartments">No apartments found.</p>
+          <div class="no-favorites-container">
+         <div class="no-favorites">
+          <p class="no-apartments">No apartments favourited.</p>
+          <a href="/" class="button">Browse</a>
+         </div>
+        </div>
       {% endfor %}
     </section>
   </div>

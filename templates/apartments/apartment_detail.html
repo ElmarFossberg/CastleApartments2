@@ -1,58 +1,140 @@
 {% extends 'base.html' %}
-
+{% load static %}
 {% block content %}
+<div>
+    <a class="go-back-button" href="javascript:history.back()"><i class="fa fa-arrow-left"></i> Go back</a>
+</div>
 <div class="apartment-detail-container">
     <h1 class="apartment-title">{{ apartment.address }}, {{ apartment.postal_code }} </h1>
     
     <div class="apartment-info-grid">
-        <div class="apartment-image">
-            <!-- Placeholder for image - in a real app you'd have an image field in your model -->
-            <div class="image-placeholder">
-                <span>Apartment Image</span>
+      <div class="apartment-image">
+        <!-- Slider gallery for all images -->
+        <div class="apartment-slider">
+          {% for img in images %}
+            <div class="slide{% if forloop.first %} active{% endif %}">
+              <img class="apartment-image"
+                src="{{ img.image }}"
+                alt="{{ apartment.address }} ({{ forloop.counter }})"
+              />
             </div>
+          {% endfor %}
+
+          <!-- Prev / Next controls -->
+          <button class="prev">‹</button>
+          <button class="next">›</button>
+
+          <!-- Thumbnails -->
+          <div class="thumbnails">
+            {% for img in images %}
+              <img
+                class="thumb{% if forloop.first %} current{% endif %}"
+                src="{{ img.image }}"
+                data-index="{{ forloop.counter0 }}"
+                alt="Thumb {{ forloop.counter }}"
+              />
+            {% endfor %}
+          </div>
         </div>
+      </div>
         
         <div class="apartment-details">
             <div class="detail-row">
-                <span class="detail-label">Type:</span>
+                <span class="detail-label-apartment-detail">Listed:</span>
+                <span class="detail-value">{{ apartment.listing_date }}</span>
+            </div>
+
+            <div class="detail-row">
+                <span class="detail-label-apartment-detail">Type:</span>
                 <span class="detail-value">{{ apartment.type }}</span>
             </div>
             
             <div class="detail-row">
-                <span class="detail-label">Price:</span>
-                <span class="detail-value">{{ apartment.price }} kr.</span>
-            </div>
-            
-            <div class="detail-row">
-                <span class="detail-label">Size:</span>
+                <span class="detail-label-apartment-detail">Size:</span>
                 <span class="detail-value">{{ apartment.square_meters }} m²</span>
             </div>
             
             <div class="detail-row">
-                <span class="detail-label">Rooms:</span>
-                <span class="detail-value">{{ apartment.number_of_rooms }}</span>
+                <span class="detail-label-apartment-detail">Bedrooms:</span>
+                <span class="detail-value">{{ apartment.number_of_bedrooms }}</span>
             </div>
-            
+
             <div class="detail-row">
-                <span class="detail-label">Status:</span>
+                <span class="detail-label-apartment-detail">Bathrooms:</span>
+                <span class="detail-value">{{ apartment.number_of_bathrooms }}</span>
+            </div>
+
+            <div class="detail-row full-width">
+                <span class="detail-label-apartment-detail">City:</span>
+                <span class="detail-value-status">{{ apartment.postal_code.city_name }}</span>
+            </div>
+
+            <div class="detail-row full-width">
+                <span class="detail-label-apartment-detail">Postal Code:</span>
+                <span class="detail-value-status">{{ apartment.postal_code }}</span>
+            </div>
+
+            <div class="detail-row">
+                <span class="detail-label-apartment-detail">Status:</span>
                 <span class="detail-value {% if apartment.sold %}sold{% else %}available{% endif %}">
                     {% if apartment.sold %}Sold{% else %}Available{% endif %}
                 </span>
             </div>
-            
-            <div class="detail-row full-width">
-                <span class="detail-label">Address:</span>
-                <span class="detail-value">{{ apartment.address }}, {{ apartment.postal_code }}</span>
+
+
+        </div>
+
+    <div class="apartment-price">
+                <span class="price-detail-value">{{ apartment.formatted_price }} kr.</span>
+
             </div>
-            
-            <button class="contact-btn">Contact Agent</button>
+    <div class="favourite-and-offer-buttons">
+         <!-- Check if the user is a buyer if so show the purchase offers -->
+            {% if user_type == 'buyer' %}
+                {% if not apartment.sold %}
+                    <div class="resubmit-container">
+                    <a class="button" href="/my-offers/create?apartment_id={{ apartment.id }}">
+                        {% if purchase_offer %}
+                            Resubmit a purchase offer
+                        {% else %}
+                            Submit a purchase offer
+                        {% endif %}
+                    </a>
+                    {% if purchase_offer %}
+                        <div class="status-text">({{ purchase_offer.status }})</div>
+                    {% endif %}
+                    </div>
+                {% endif %}
+            <!-- Favourite button -->
+            <form method="post" action="{% url 'favourite' %}">
+                {% csrf_token %}
+                    <input type="hidden" name="apartment_id" value="{{ apartment.id }}">
+                    {% if apartment.is_favourited %}
+                        <button class="button" type="submit">
+                           <i class="fas fa-heart-broken"></i> Unfavourite
+                        </button>
+                    {% else %}
+                        <button class="button" type="submit">
+                            <i class="fas fa-heart"></i> Favourite
+                        </button>
+                    {% endif %}
+            </form>
+            {% endif %}
         </div>
     </div>
-    
-    <div class="apartment-description">
-        <h2>Description</h2>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam in dui mauris. Vivamus hendrerit arcu sed erat molestie vehicula. Sed auctor neque eu tellus rhoncus ut eleifend nibh porttitor.</p>
-        <!-- In a real app, you'd have a description field in your model -->
+    <div class="apartment-bottom-row">
+        <!-- EL ég setti bara myndina og nafnið þú breytir svo the info eg gerði þetta bara svona þannig easy að cssa og gera nett -->
+        <div class="apartment-seller-information">
+            <h2>Seller information</h2>
+            <p>Name: {{ seller_profile.full_name }}</p>
+            <img src="{{ seller_profile.profile_image }}" alt="{{ seller_profile.full_name }}" />
+            <a href="user/seller/{{ seller.id }}" class="button">Go to seller profile</a>
+        </div>
+
+        <div class="apartment-description">
+            <h2>Description</h2>
+            <p>{{ apartment.description }}</p>
+        </div>
     </div>
 </div>
 {% endblock %}

@@ -24,5 +24,7 @@ urlpatterns = [
     path('', include('apartment.urls')),
     path('admin/', admin.site.urls),
     path('user/', include('user.urls')),
+    path('favourite/', include('favourite.urls')),
+    path('my-offers/', include('purchaseOffer.urls')),
 
 ]

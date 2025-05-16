@@ -1,8 +1,8 @@
 {% extends "base.html" %}
+
 {% block content %}
   <div class="apartments-container">
-    <h1 class="apartments-title">Available Properties</h1>
-    {% include "apartments/apartment_filter_form.html" %}
+    <h1 class="apartments-title">My Properties</h1>
     <section class="apartments-grid">
       {% for apartment in apartments %}
         <div class="apartment-card {% if apartment.sold %}sold{% endif %}">

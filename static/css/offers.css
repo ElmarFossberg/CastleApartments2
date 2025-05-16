@@ -1,0 +1,86 @@
+/* Purchase Offers Page */
+.purchase-offers-container {
+    max-width: 1200px;
+}
+
+.page-title {
+    margin-bottom: 2rem;
+    color: var(--dark-gray);
+    font-size: 2rem;
+    font-weight: 600;
+}
+
+.offers-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+    background-color: white;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1); /* subtle shadow for separation */
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+.offers-table th,
+.offers-table td {
+    padding: 1rem;
+    text-align: left;
+    border-bottom: 1px solid var(--border); /* lighter border for subtle separation */
+    color: var(--dark-gray);
+    font-weight: 400;
+}
+
+.offers-table th {
+    background-color: #f1f3f5;
+    font-weight: 700;
+    color: #555555;
+}
+
+.offer-row:hover {
+    background-color: #f9f9f9;
+    cursor: pointer;
+}
+
+.purchase-offer-link {
+    color: var(--dark-gray);
+    font-weight: 600;
+    text-decoration: none;
+    transition: color 0.15s ease;
+}
+
+.purchase-offer-link:hover {
+    color: var(--primary);
+    text-decoration: underline;
+}
+.no-offers {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* aligns button left */
+  gap: 1rem;
+}
+
+.no-offers .button {
+  width: auto;
+}
+
+.status-badge {
+    padding: 4px 8px;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    font-weight: normal;
+    color: white;
+    display: inline-block;
+    text-transform: capitalize;
+}
+
+/* Status color variants */
+.status-pending {
+    background-color: #f0ad4e; /* orange */
+}
+
+.status-accepted {
+    background-color: #5cb85c; /* green */
+}
+
+.status-rejected {
+    background-color: #d9534f; /* red */
+}

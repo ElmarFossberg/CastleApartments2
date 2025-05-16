@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+<div class="purchase-offers-container">
+    <h1 class="page-title">Your Purchase Offers</h1>
+
+    <div class="offers-list">
+        {% if purchase_offers %}
+            <table class="offers-table">
+                <thead>
+                    <tr>
+                        <th>Property</th>
+                        <th>Offer Date</th>
+                        <th>Expiration Date</th>
+                        <th>Status</th>
+                        <th>Seller</th>
+                        <th>Offer Price</th>
+                        <th>Finalize?</th>
+                        <th>Cancel?</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for offer in purchase_offers %}
+                    <tr class="offer-row offer-{{ offer.status }}">
+                        <td>
+                            <a href="{% url 'apartment_by_id' offer.apartment.id %}" class="purchase-offer-link">
+                                {{ offer.apartment.address }}, {{ offer.apartment.postal_code.city_name }}
+                            </a>
+                        </td>
+                        <td>{{ offer.purchase_date|date:"M d, Y" }}</td>
+                        <td>{{ offer.expiration_date|date:"M d, Y" }}</td>
+                        <td>
+                            <span class="status-badge status-{{ offer.status }}">
+                                {{ offer.get_status_display }}
+                            </span>
+                        </td>
+                        <td>
+                            <a class="purchase-offer-link" href="{% url 'seller_by_id' offer.seller.id %}">{{ offer.seller.profile.full_name }}</a>
+                        </td>
+                        <td>{{ offer.formatted_amount}} Kr</td>
+                        <td>
+                          {% if offer.status == 'accepted' %}
+                            <a class="button">Finalize</a>
+                          {% else %}
+                            -
+                          {% endif %}
+                        </td>
+                        <td>
+                          {% if offer.status == 'accepted' %}
+                            <form method="post" action="{% url 'offer-cancel' offer.id %}">
+                              {% csrf_token %}
+                              <button type="submit" class="button-secondary">Cancel</button>
+                            </form>
+                          {% else %}
+                            -
+                          {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <div class="no-offers">
+                <p>You haven't made any purchase offers yet.</p>
+                <div>
+                    <a href="/" class="button">
+                       <i class="fas fa-home"></i> Browse Properties
+                    </a>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% include '_messages.html' %}
+
+{% endblock %}

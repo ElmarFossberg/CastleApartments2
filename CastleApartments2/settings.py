@@ -39,6 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'apartment.apps.ApartmentConfig',
     'user.apps.UserConfig',
+    'favourite.apps.FavouriteConfig',
+    'purchaseOffer.apps.PurchaseofferConfig',
 ]
 
 MIDDLEWARE = [
@@ -64,6 +66,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'apartment.context.user_profile'
             ],
         },
     },
@@ -131,4 +134,4 @@ STATICFILES_DIRS = [
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LOGIN_REDIRECT_URL = '/user/profile'
-LOGIN_URL = '/'
+LOGIN_URL = '/user/login'

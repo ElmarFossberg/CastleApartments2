@@ -27,6 +27,7 @@ class Buyer(models.Model):
 
 class RealEstateFirm(models.Model):
     firm_name = models.CharField(max_length=100)
+    postal_code = models.ForeignKey('apartment.PostalCode', on_delete=models.PROTECT, db_column='postal_code', default=101)
     firm_address = models.CharField(max_length=255)
     firm_image = models.TextField(max_length=4096)
 
@@ -37,6 +38,8 @@ class RealEstateFirm(models.Model):
 class Seller(models.Model):
     profile = models.OneToOneField(UserProfile, on_delete=models.CASCADE)
     firm = models.ForeignKey(RealEstateFirm, null=True, blank=True, on_delete=models.SET_NULL)
+    cover_image = models.CharField(max_length=4096, null=True, blank=True)
+    bio = models.TextField(max_length=4096, default=None, null=True, blank=True)
 
     def __str__(self):
         return self.profile.full_name

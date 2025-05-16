@@ -1,6 +1,6 @@
 /* Header */
 .header {
-  background-color: #ffffff;
+  background-color: white;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   position: sticky;
   top: 0;
@@ -19,7 +19,7 @@
 
 .logo {
   text-decoration: none;
-  color: #333;
+  color: var(--dark-gray);
 }
 
 .logo h1 {
@@ -38,7 +38,7 @@
 
 .nav-links a{
   text-decoration: none;
-  color: #333;
+  color: var(--dark-gray);
   font-weight: 500;
   padding: 0.5rem 0;
   position: relative;
@@ -52,7 +52,7 @@
 .nav-links a[aria-current="page"] {
   color: var(--primary);
 }
-
+/* Way to show where user is located */
 .nav-links a[aria-current="page"]::after {
   content: "";
   position: absolute;

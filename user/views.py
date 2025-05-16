@@ -1,15 +1,20 @@
 from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import render, redirect
+from django.contrib import messages
+
+from apartment.models import Apartment
 from user.forms.profile_form import  ProfileForm
 
-from user.models import UserProfile
-from user.forms.profile_form import  BuyerForm, SellerForm, RealEstateFirmForm
+from user.models import  Seller, RealEstateFirm
+from user.forms.profile_form import  BuyerForm, SellerForm
+from django.contrib.auth.decorators import login_required
 
 
 # Create your views here.
 
 def register(request):
     if request.method == 'POST':
+        # Get the forms: Django's built-in user form and our custom profile form
         user_form = UserCreationForm(request.POST)
         profile_form = ProfileForm(request.POST)
 
@@ -49,29 +54,58 @@ def register(request):
         'profile_form': profile_form,
     })
 
+@login_required
 def profile(request):
+    # Get access to the profile and initilize the form
     prof = request.user.userprofile
     form = None
-
+    # If the account is a buyer the profile will show the buyer form
     if prof.user_type == 'buyer':
         if hasattr(prof, 'buyer'):
             form = BuyerForm(request.POST or None, instance=prof.buyer)
         else:
             form = BuyerForm(request.POST or None)
+    # If the account is a seller the profile will show the buyer form
     elif prof.user_type == 'seller':
         if hasattr(prof, 'seller'):
             form = SellerForm(request.POST or None, instance=prof.seller)
         else:
             form = SellerForm(request.POST or None)
+    # SIDE NOTE: It should be impossible to be neither so else is not needed
 
+    # Code to update the profile through POST method
+    success = False
     if request.method == 'POST' and form.is_valid():
         obj = form.save(commit=False)
         if not hasattr(prof, prof.user_type):  # if buyer/seller does not exist yet
             obj.profile = prof
         obj.save()
-        return redirect('profile')
+        success = True
 
+    # Render the html and send relevant data
     return render(request, 'user/profile.html', {
         'profile': prof,
         'form': form,
+        "success": success,
+    })
+
+def get_seller_by_id(request, seller_id):
+    try:
+        seller = Seller.objects.get(id=seller_id)
+    except Seller.DoesNotExist:
+        return render(request, 'error.html', {"message": "Seller not found."}, status=404)
+
+    apartments = Apartment.objects.filter(seller=seller)
+    seller_profile = seller.profile
+
+    try:
+        real_estate_firm = RealEstateFirm.objects.get(seller=seller)
+    except RealEstateFirm.DoesNotExist:
+        real_estate_firm = None
+
+    return render(request, 'user/seller.html', {
+        "apartments": apartments,
+        "seller": seller,
+        "seller_profile": seller_profile,
+        "real_estate_firm": real_estate_firm,
     })
