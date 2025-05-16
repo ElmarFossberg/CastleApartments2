@@ -102,6 +102,22 @@ main {
 .button:hover {
   background-color: #0056b3;
 }
+
+.button-secondary {
+  background-color: transparent;
+  color: var(--primary);
+  padding: 0.5rem 1rem;
+  border: 2px solid var(--primary);
+  border-radius: 0.35rem;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.button-secondary:hover {
+  background-color: var(--primary);
+  color: white;
+}
 /* Form Styles */
 .form-group {
   margin-bottom: 1rem;

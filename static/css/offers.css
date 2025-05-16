@@ -61,3 +61,26 @@
 .no-offers .button {
   width: auto;
 }
+
+.status-badge {
+    padding: 4px 8px;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    font-weight: normal;
+    color: white;
+    display: inline-block;
+    text-transform: capitalize;
+}
+
+/* Status color variants */
+.status-pending {
+    background-color: #f0ad4e; /* orange */
+}
+
+.status-accepted {
+    background-color: #5cb85c; /* green */
+}
+
+.status-rejected {
+    background-color: #d9534f; /* red */
+}
