@@ -9,16 +9,15 @@
         <li class="payment-item">
           <div class="payment-header">
             <span class="payment-offer-id">Offer ID: {{ purchase.purchase_offer.id }}</span>
-            <span class="payment-status">Status: {{ purchase.purchase_offer.status }}</span>
           </div>
 
           <div class="payment-details">
-            <p class="payment-price"><strong>Price:</strong> {{ purchase.purchase_offer.purchase_amount }} Kr.</p>
+            <p class="payment-price-in-my-payments"><strong>Price:</strong> {{ purchase.purchase_offer.purchase_amount }} Kr.</p>
           <p class="payment-contact-address">
           <strong>Contact Address:</strong> {{ purchase.contact_address }}</p>
             <p class="payment-contact-country"><strong>Country:</strong> {{ purchase.contact_country.name }}</p>
             <p class="payment-national-id"><strong>National ID:</strong> {{ purchase.contact_national_id }}</p>
-            <p class="payment-option"><strong>Payment Option:</strong> {{ purchase.payment_option|capfirst }}</p>
+            <p class="payment-option"><strong>Payment Option:</strong> {{ purchase.payment_option }}</p>
 
             {% if purchase.payment_option == 'credit_card' and purchase.credit_card %}
               <p class="payment-method-details">
