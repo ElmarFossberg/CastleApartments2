@@ -212,7 +212,6 @@
   flex: 1 1 300px;
   display: flex;
   flex-direction: column;
-  gap: 16px;
 }
 
 .detail-row {

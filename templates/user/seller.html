@@ -21,7 +21,7 @@
         <div class="seller-profile-info">
             <h1>{{ seller.profile.full_name }}</h1>
             {% if seller.firm %}
-            <h2>Firm: {{ seller.firm.firm_name }}</h2>
+            <p>Bio: {{ seller.bio }}</p>
             {% else %}
             <h2>Individual Seller</h2>
             {% endif %}
@@ -45,8 +45,10 @@
 
                 {% if seller.bio %}
                 <div class="seller-detail-card">
-                    <h3>Bio</h3>
-                    <p class="seller-contact-information">{{ seller.bio }}</p>
+                    <h3>Firm information</h3>
+                    <p class="seller-contact-information"><i class="fa fa-building"></i> {{ seller.firm.firm_name }}</p>
+                    <p class="seller-contact-information"><i class="fa fa-map-marker-alt"></i> {{ seller.firm.firm_address }}, {{ seller.firm.postal_code }}</p>
+                    <p class="seller-contact-information"><img src="{{ seller.firm.firm_image }}"></p>
                 </div>
                 {% endif %}
             </div>
