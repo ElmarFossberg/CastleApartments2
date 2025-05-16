@@ -2,20 +2,106 @@
 {% load static %}
 
 {% block content %}
- <h1>Seller: {{ seller_profile.full_name }}</h1>
-    <p>Email: {{ seller_profile.email }}</p>
-    <p>Phone: {{ seller_profile.phone }}</p>
-    {% if real_estate_firm %}
-        <h2>{{ real_estate_firm.firm_name }}</h2>
-        <h3>{{ real_estate_firm.firm_address }}</h3>
-    {% endif %}
-    <p></p>
-    <h2>Apartments:</h2>
-    <ul>
-        {% for apt in apartments %}
-            <li>{{ apt.address }} – {{ apt.price }} ISK</li>
-        {% empty %}
-            <li>No apartments found for this seller.</li>
-        {% endfor %}
-    </ul>
+<div class="seller-profile">
+    <!-- Cover Photo -->
+    <div class="cover-photo">
+        {% if seller.cover_image %}
+        <img src="{{ seller.cover_image }}" alt="Cover photo" class="cover-img">
+        {% else %}
+        <div class="default-cover"></div>
+        {% endif %}
+    </div>
+
+    <!-- Profile Header -->
+    <div class="profile-header">
+        <div class="profile-image">
+            <img src="{{ seller.profile.profile_image }}" alt="Profile picture">
+        </div>
+
+        <div class="profile-info">
+            <h1>{{ seller.profile.full_name }}</h1>
+            {% if seller.firm %}
+            <h2>Firm: {{ seller.firm.firm_name }}</h2>
+            {% else %}
+            <h2>Individual Seller</h2>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="profile-content">
+            <!-- Left Column -->
+            <div class="profile-details">
+                <div class="detail-card">
+                    <h3>Contact Information</h3>
+                    <p class="contact-information"><i class="fa fa-envelope"></i> {{ seller.profile.email }}</p>
+                    <p class="contact-information"><i class="fa fa-phone"></i> {{ seller.profile.phone }}</p>
+
+                    {% if seller.firm %}
+                    <div class="firm-address">
+                        <p class="contact-information"><i class="fa fa-map-marker-alt"></i>{{ seller.firm.firm_address }}</p>
+                    </div>
+                    {% endif %}
+                </div>
+
+                {% if seller.bio %}
+                <div class="detail-card">
+                    <h3>Bio</h3>
+                    <p class="contact-information">{{ seller.bio }}</p>
+                </div>
+                {% endif %}
+            </div>
+
+        <!-- Right Column -->
+        <div class="property-listings">
+            <h2 class="properties-for-sale">Sellers listed properties</h2>
+
+            <div class="apartments-grid">
+                {% for apt in apartments %}
+                <div class="apartment-card {% if apt.sold %}sold{% endif %}">
+                    <div class="card-image-container">
+                        {% if apt.images.first %}
+                        <img class="card-image" src="{{ apt.images.first.image_url }}" alt="{{ apt.address }}" />
+                        {% else %}
+                        <div class="thumbnail-placeholder"></div>
+                        {% endif %}
+                        {% if apt.sold %}
+                        <div class="sold-banner">SOLD</div>
+                        {% endif %}
+                    </div>
+                    <div class="card-content">
+                        <h2 class="card-address">{{ apt.address }}</h2>
+                        <p class="card-postal">{{ apt.postal_code.postal_code }}, {{ apt.postal_code.city_name }}</p>
+
+                        <div class="property-details">
+                            <div class="detail-item">
+                                <span class="detail-label">Price:</span>
+                                <span class="detail-value">{{ apt.price }} ISK</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Rooms:</span>
+                                <span class="detail-value">{{ apt.number_of_rooms }}</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Size:</span>
+                                <span class="detail-value">{{ apt.square_meters }} m²</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Listing Date:</span>
+                                <span class="detail-value">{{ apt.listing_date }}</span>
+                            </div>
+                        </div>
+
+                        <a class="card-button" href="/{{ apt.id }}">View Details</a>
+                    </div>
+                </div>
+                {% empty %}
+                <div class="no-properties">
+                    <p>No properties currently listed</p>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}
