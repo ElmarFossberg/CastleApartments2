@@ -105,3 +105,22 @@ def create(request):
         'form': form,
         'apartment': apartment,
     })
+
+
+@login_required
+def cancel(request, offer_id):
+    try:
+        offer = PurchaseOffer.objects.get(id=offer_id)
+        buyer_user = offer.buyer.profile.user
+        seller_user = offer.seller.profile.user
+
+        # Only buyer or seller can reject (authorization)
+        if request.user == buyer_user or request.user == seller_user:
+            offer.status = 'rejected'
+            offer.save()
+            messages.success(request, "Offer rejected successfully.")
+        else:
+            messages.error(request, "You are not allowed to cancel this offer.")
+    except PurchaseOffer.DoesNotExist:
+        messages.error(request, "Offer not found.")
+    return redirect('offers')

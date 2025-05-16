@@ -6,4 +6,7 @@ urlpatterns = [
     path('', views.index, name='offers'),
     path('create', views.create, name='offer-create'),
 
+    path('<int:offer_id>/cancel/', views.cancel, name='offer-cancel'),
+
+
 ]

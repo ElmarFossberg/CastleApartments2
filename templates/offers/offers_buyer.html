@@ -16,7 +16,8 @@
                         <th>Status</th>
                         <th>Seller</th>
                         <th>Offer Price</th>
-                        <th>Actions</th>
+                        <th>Finalize?</th>
+                        <th>Cancel?</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -39,13 +40,21 @@
                         </td>
                         <td>{{ offer.formatted_amount}} Kr</td>
                         <td>
-                            {% if offer.status in 'accepted' %}
-                                <a href="{% url 'purchase:finalize' offer.id %}" class="button button-finalize">
-                                    Finalize
-                                </a>
-                            {% else %}
-                                -
-                            {% endif %}
+                          {% if offer.status == 'accepted' %}
+                            <a class="button">Finalize</a>
+                          {% else %}
+                            -
+                          {% endif %}
+                        </td>
+                        <td>
+                          {% if offer.status == 'accepted' %}
+                            <form method="post" action="{% url 'offer-cancel' offer.id %}">
+                              {% csrf_token %}
+                              <button type="submit" class="button-secondary">Cancel</button>
+                            </form>
+                          {% else %}
+                            -
+                          {% endif %}
                         </td>
                     </tr>
                     {% endfor %}
@@ -63,4 +72,6 @@
         {% endif %}
     </div>
 </div>
+{% include '_messages.html' %}
+
 {% endblock %}

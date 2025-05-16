@@ -96,7 +96,8 @@ def get_apartment_by_id(request, apartment_id):
         if buyer:
             # Get purchase offer info
             try:
-                purchase_offer = PurchaseOffer.objects.get(buyer=buyer, apartment=apartment)
+                purchase_offers = PurchaseOffer.objects.filter(buyer=buyer, apartment=apartment)
+                purchase_offer = purchase_offers.order_by('-purchase_date').first()
             except PurchaseOffer.DoesNotExist:
                 purchase_offer = None
         # Get seller info
