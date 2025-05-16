@@ -19,4 +19,6 @@ class PurchaseOfferForm(ModelForm):
         purchase_amount = self.cleaned_data.get('purchase_amount')
         if purchase_amount <= 0:
             raise forms.ValidationError("Purchase amount must be positive.")
+        if purchase_amount > 1000000000:
+            raise forms.ValidationError("holdon there pal, the maximum bid is 1000000000.")
         return purchase_amount

@@ -103,6 +103,13 @@ main {
   background-color: #0056b3;
 }
 
+.disabled {
+  background-color: gray;
+  cursor: not-allowed;
+  pointer-events: none;
+  color: #ccc;
+}
+
 .button-secondary {
   background-color: transparent;
   color: var(--primary);

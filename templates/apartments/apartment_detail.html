@@ -91,20 +91,27 @@
     <div class="favourite-and-offer-buttons">
          <!-- Check if the user is a buyer if so show the purchase offers -->
             {% if user_type == 'buyer' %}
-                {% if not apartment.sold %}
-                    <div class="resubmit-container">
-                    <a class="button" href="/my-offers/create?apartment_id={{ apartment.id }}">
-                        {% if purchase_offer %}
-                            Resubmit a purchase offer
-                        {% else %}
-                            Submit a purchase offer
-                        {% endif %}
+                {% if apartment.sold %}
+                    <a class="button disabled" href="javascript:void(0);" tabindex="-1" aria-disabled="true">
+                      {% if purchase_offer %}
+                        Resubmit a purchase offer
+                      {% else %}
+                        Submit a purchase offer
+                      {% endif %}
                     </a>
-                    {% if purchase_offer %}
-                        <div class="status-text">({{ purchase_offer.status }})</div>
-                    {% endif %}
-                    </div>
-                {% endif %}
+                  {% else %}
+                    <a class="button" href="/my-offers/create?apartment_id={{ apartment.id }}">
+                      {% if purchase_offer %}
+                        Resubmit a purchase offer
+                      {% else %}
+                        Submit a purchase offer
+                      {% endif %}
+                    </a>
+                  {% endif %}
+
+                  {% if purchase_offer %}
+                    <div class="status-text">({{ purchase_offer.status }})</div>
+                  {% endif %}
             <!-- Favourite button -->
             <form method="post" action="{% url 'favourite' %}">
                 {% csrf_token %}
