@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="step-shower">
+  {% for i in steps %}
+    <span class="step {% if i == step %}current{% elif i < step %}done{% endif %}">
+      Step {{ i }}
+    </span>
+    {% if not forloop.last %} &gt; {% endif %}
+  {% endfor %}
+</div>
+
+
+{% if step == 1 or step == 2 or step == 3 %}
+  <form method="post">
+    {% csrf_token %}
+
+    {% if form.errors %}
+      <div class="alert alert-error">
+        {% for field in form %}
+          {% for error in field.errors %}
+            <p>{{ field.label }}: {{ error }}</p>
+          {% endfor %}
+        {% endfor %}
+        {% for error in form.non_field_errors %}
+          <p>{{ error }}</p>
+        {% endfor %}
+      </div>
+    {% endif %}
+
+    {% for field in form %}
+      <div class="form-group">
+        {{ field.label_tag }} {{ field }}
+        {% if field.help_text %}
+          <small class="form-text text-muted">{{ field.help_text }}</small>
+        {% endif %}
+      </div>
+    {% endfor %}
+    {% if step > 1 %}
+        <button type="button" onclick="history.back()" class="button">Go Back</button>
+    {% endif %}
+    <button type="submit" class="button">Next</button>
+
+
+  </form>
+
+{% elif step == 4 %}
+  <div class="review-container">
+    <h2>Review Your Information</h2>
+
+    <div class="review-section">
+      <h3>Contact Info</h3>
+      <p><strong>Country:</strong> {{ form_data.contact.contact_country }}</p>
+      <p><strong>National ID:</strong> {{ form_data.contact.contact_national_id }}</p>
+      <p><strong>Postal Code:</strong> {{ form_data.contact.contact_postal_code }}</p>
+      <p><strong>Address:</strong> {{ form_data.contact.contact_address }}</p>
+      <p><strong>Street:</strong> {{ form_data.contact.contact_street }}</p>
+      <p><strong>City:</strong> {{ form_data.contact.contact_city }}</p>
+    </div>
+
+    <div class="review-section">
+      <h3>Payment Option</h3>
+      <p>{{ form_data.payment_option }}</p>
+    </div>
+
+    {% if form_data.payment_option == 'credit_card' %}
+        <p><strong>Cardholder:</strong> {{ form_data.payment_details.cardholder_name }}</p>
+        <p><strong>Credit Card Number:</strong> {{ form_data.payment_details.credit_card_number }}</p>
+        <p><strong>Expiry Date:</strong> {{ form_data.payment_details.expiry_date }}</p>
+        <p><strong>CVC:</strong> ***</p>
+    {% elif form_data.payment_option == 'bank_transfer' %}
+        <p><strong>Bank Account:</strong> {{ form_data.payment_details.bank_account }}</p>
+    {% elif form_data.payment_option == 'mortgage' %}
+            <p><strong>Mortgage Provider:</strong> {{ form_data.payment_details.provider }}</p>
+    {% else %}
+        <p>No payment details available.</p>
+    {% endif %}
+
+
+    <form method="post">
+      {% csrf_token %}
+      <div class="button-group">
+        <button type="button" onclick="history.back()" class="button">Go Back</button>
+        <button type="submit" name="confirm" class="button">Confirm Purchase</button>
+      </div>
+    </form>
+  </div>
+
+{% elif step == 5 %}
+  <h2 class="mb">Purchase confirmed!</h2>
+  <a href="/" class="button">Go to homepage</a>
+{% endif %}
+
+{% endblock %}

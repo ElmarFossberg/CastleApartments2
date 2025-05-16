@@ -41,7 +41,7 @@
                         <td>{{ offer.formatted_amount}} Kr</td>
                         <td>
                           {% if offer.status == 'accepted' %}
-                            <a class="button">Finalize</a>
+                            <a class="button" href="{% url 'finalize_purchase' offer.id %}">Finalize</a>
                           {% else %}
                             -
                           {% endif %}

@@ -7,7 +7,7 @@ from django.utils import timezone
 class PurchaseOfferForm(ModelForm):
     class Meta:
         model = PurchaseOffer
-        exclude = ['apartment', 'buyer', 'seller', 'status', 'purchase_date']
+        exclude = ['apartment', 'buyer', 'seller', 'status', 'purchase_date', 'finalized']
 
     def clean_expiration_date(self):
         expiration_date = self.cleaned_data.get('expiration_date')

@@ -4,6 +4,7 @@ SORT_CHOICES = [
     ('date', 'Newest first'),
     ('price_asc', 'Price (low to high)'),
     ('price_desc', 'Price (high to low)'),
+    ('address', 'Address (name)'),
 ]
 
 class ApartmentFilterForm(forms.Form):
