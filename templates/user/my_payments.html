@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1 class="payment-title">My Payments</h1>
+
+  {% if finalized_purchases %}
+    <ul class="payment-list">
+      {% for purchase in finalized_purchases %}
+        <li class="payment-item">
+          <div class="payment-header">
+            <span class="payment-offer-id">Offer ID: {{ purchase.purchase_offer.id }}</span>
+            <span class="payment-status">Status: {{ purchase.purchase_offer.status }}</span>
+          </div>
+
+          <div class="payment-details">
+            <p class="payment-price"><strong>Price:</strong> ${{ purchase.purchase_offer.purchase_amount }}</p>
+          <p class="payment-contact-address">
+          <strong>Contact Address:</strong> {{ purchase.contact_address }}</p>
+            <p class="payment-contact-country"><strong>Country:</strong> {{ purchase.contact_country.name }}</p>
+            <p class="payment-national-id"><strong>National ID:</strong> {{ purchase.contact_national_id }}</p>
+            <p class="payment-option"><strong>Payment Option:</strong> {{ purchase.payment_option|capfirst }}</p>
+
+            {% if purchase.payment_option == 'credit_card' and purchase.credit_card %}
+              <p class="payment-method-details">
+                Credit Card: **** **** **** {{ purchase.credit_card.card_number|slice:"-4:" }}
+              </p>
+            {% elif purchase.payment_option == 'bank_transfer' and purchase.bank_transfer %}
+              <p class="payment-method-details">
+                Bank Transfer Account: {{ purchase.bank_transfer.account_number }}
+              </p>
+            {% elif purchase.payment_option == 'mortgage' and purchase.mortgage %}
+              <p class="payment-method-details">
+                Mortgage Bank: {{ purchase.mortgage.bank_name }}
+              </p>
+            {% endif %}
+
+            <p class="payment-confirmed">
+              <strong>Confirmed:</strong> {{ purchase.confirmed|yesno:"Yes,No" }}
+            </p>
+            {% if purchase.confirmation_date %}
+              <p class="payment-confirmation-date"><strong>Confirmed on:</strong> {{ purchase.confirmation_date|date:"Y-m-d H:i" }}</p>
+            {% endif %}
+          </div>
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p class="payment-no-purchases">You have no finalized purchases or sales yet.</p>
+  {% endif %}
+
+{% endblock %}

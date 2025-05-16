@@ -3,7 +3,7 @@ from django.shortcuts import render
 from apartment.models import Apartment, ApartmentImages
 from user.models import Seller, Buyer
 from favourite.models import Favourites
-from purchaseOffer.models import PurchaseOffer
+from purchaseOffer.models import PurchaseOffer, FinalizedPurchaseOffer
 from .forms.apartment_filter_form import ApartmentFilterForm
 from apartment.context import format_apartments
 
@@ -45,6 +45,8 @@ def index(request):
             apartments = apartments.order_by('-price')
         elif sort == 'date':
             apartments = apartments.order_by('-listing_date')
+        elif sort == 'address':
+            apartments = apartments.order_by('address')
         else:
             apartments = apartments.order_by('-listing_date', 'sold')  # default
 
@@ -137,3 +139,29 @@ def my_properties(request):
         'apartments': apartments
     })
 
+
+@login_required
+@login_required
+def my_payments(request):
+    user = request.user
+
+    try:
+        buyer = Buyer.objects.get(profile__user=user)
+        buyer_offers = PurchaseOffer.objects.filter(buyer=buyer, finalized=True)
+    except Buyer.DoesNotExist:
+        buyer_offers = PurchaseOffer.objects.none()
+
+    try:
+        seller = Seller.objects.get(profile__user=user)
+        seller_offers = PurchaseOffer.objects.filter(seller=seller, finalized=True)
+    except Seller.DoesNotExist:
+        seller_offers = PurchaseOffer.objects.none()
+
+    offers = buyer_offers | seller_offers
+
+    finalized_purchases = FinalizedPurchaseOffer.objects.filter(purchase_offer__in=offers)
+
+    context = {
+        'finalized_purchases': finalized_purchases,
+    }
+    return render(request, 'user/my_payments.html', context)

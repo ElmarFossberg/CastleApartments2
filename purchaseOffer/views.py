@@ -1,10 +1,13 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404, redirect
+from django.urls import reverse
 
-from apartment.models import Apartment, ApartmentImages
-from purchaseOffer.models import PurchaseOffer
+from apartment.models import Apartment, ApartmentImages, PostalCode
+from purchaseOffer.models import *
 from user.models import UserProfile, Buyer, Seller
+
 from purchaseOffer.forms.purchase_offer_form import PurchaseOfferForm
+from purchaseOffer.forms.finalization_form import ContactInfoForm, PaymentOptionForm, CreditCardForm, BankTransferForm, MortgageForm
 
 from django.contrib import messages
 
@@ -37,7 +40,7 @@ def index(request):
         except Buyer.DoesNotExist:
             return render(request, 'error.html', {"message": "You have to complete your profile."}, status=404)
 
-        purchase_offers = PurchaseOffer.objects.filter(buyer=buyer)
+        purchase_offers = PurchaseOffer.objects.filter(buyer=buyer, finalized=False)
         #Formatting price
         for offer in purchase_offers:
             amount = offer.purchase_amount
@@ -56,7 +59,7 @@ def index(request):
         except Seller.DoesNotExist:
             return render(request, 'error.html', {"message": "You have to complete your profile."}, status=404)
 
-        purchase_offers = PurchaseOffer.objects.filter(seller=seller)
+        purchase_offers = PurchaseOffer.objects.filter(seller=seller, finalized=False)
 
         # Format the price for each offer
         for offer in purchase_offers:
@@ -75,8 +78,17 @@ def index(request):
 def create(request):
     # Access the data needed to keep going
     apartment_id = request.GET.get('apartment_id')
-    apartment = get_object_or_404(Apartment, id=apartment_id)
-    buyer = get_object_or_404(Buyer, profile__user=request.user)
+
+    try:
+        apartment = Apartment.objects.get(id=apartment_id)
+    except Apartment.DoesNotExist:
+        return render(request, 'error.html', {"message": "Apartment not found."})
+
+    try:
+        buyer = Buyer.objects.get(profile__user=request.user)
+    except Buyer.DoesNotExist:
+        return render(request, 'Error.html', {"message": "Complete your profile first."})
+
     seller = apartment.seller
 
     # Make sure the apartment is not owned by the owner
@@ -124,3 +136,113 @@ def cancel(request, offer_id):
     except PurchaseOffer.DoesNotExist:
         messages.error(request, "Offer not found.")
     return redirect('offers')
+
+def finalize_purchase(request, offer_id):
+    step = int(request.GET.get('step', 1))
+
+    purchase_offer = get_object_or_404(PurchaseOffer, id=offer_id)
+
+    form_data = request.session.get('form_data', {})
+
+    if request.method == 'POST':
+        if step == 1:
+            form = ContactInfoForm(request.POST)
+            if form.is_valid():
+                contact = form.cleaned_data.copy()
+                contact['contact_country'] = contact['contact_country'].name
+                contact['contact_postal_code'] = contact['contact_postal_code'].postal_code
+                form_data['contact'] = contact
+                request.session['form_data'] = form_data
+                return redirect(f"{reverse('finalize_purchase', args=[offer_id])}?step=2")
+
+        elif step == 2:
+            form = PaymentOptionForm(request.POST)
+            if form.is_valid():
+                form_data['payment_option'] = form.cleaned_data['payment_option']
+                request.session['form_data'] = form_data
+                return redirect(f"{reverse('finalize_purchase', args=[offer_id])}?step=3")
+
+        elif step == 3:
+            payment_option = form_data.get('payment_option')
+            if payment_option == 'credit_card':
+                form = CreditCardForm(request.POST)
+            elif payment_option == 'bank_transfer':
+                form = BankTransferForm(request.POST)
+            elif payment_option == 'mortgage':
+                form = MortgageForm(request.POST)
+            else:
+                form = None
+
+            if form and form.is_valid():
+                form_data['payment_details'] = form.cleaned_data
+                request.session['form_data'] = form_data
+                return redirect(f"{reverse('finalize_purchase', args=[offer_id])}?step=4")
+
+        elif step == 4:
+            if 'confirm' in request.POST:
+                payment_option = form_data['payment_option']
+                payment_details = form_data['payment_details']
+
+                if payment_option == 'credit_card':
+                    credit_card = CreditCard.objects.create(**payment_details)
+                    bank_transfer = mortgage = None
+                elif payment_option == 'bank_transfer':
+                    bank_transfer = BankTransfer.objects.create(**payment_details)
+                    credit_card = mortgage = None
+                elif payment_option == 'mortgage':
+                    mortgage = Mortgage.objects.create(**payment_details)
+                    credit_card = bank_transfer = None
+                # Create finalized offer
+                contact = form_data['contact']
+                FinalizedPurchaseOffer.objects.create(
+                    purchase_offer=purchase_offer,
+                    contact_address=contact['contact_address'],
+                    contact_street=contact['contact_street'],
+                    contact_city=contact['contact_city'],
+                    postal_code=PostalCode.objects.get(postal_code=contact['contact_postal_code']),
+                    contact_country=Country.objects.get(name=contact['contact_country']),
+                    contact_national_id=contact['contact_national_id'],
+                    payment_option=payment_option,
+                    credit_card=credit_card,
+                    bank_transfer=bank_transfer,
+                    mortgage=mortgage,
+                    confirmed=True,
+                    confirmation_date=timezone.now()
+                )
+                purchase_offer.finalized = True
+                purchase_offer.save()
+
+                # Clear session data
+                request.session.pop('form_data', None)
+                return redirect(f"{reverse('finalize_purchase', args=[offer_id])}?step=5")
+
+    else:
+        # GET request: prepare forms with initial data if available
+        if step == 1:
+            form = ContactInfoForm(initial=form_data.get('contact'))
+        elif step == 2:
+            form = PaymentOptionForm(initial={'payment_option': form_data.get('payment_option')})
+        elif step == 3:
+            payment_option = form_data.get('payment_option')
+            if payment_option == 'credit_card':
+                form = CreditCardForm(initial=form_data.get('payment_details'))
+            elif payment_option == 'bank_transfer':
+                form = BankTransferForm(initial=form_data.get('payment_details'))
+            elif payment_option == 'mortgage':
+                form = MortgageForm(initial=form_data.get('payment_details'))
+            else:
+                form = None
+        elif step == 4 or step == 5:
+            form = None
+        else:
+            form = None
+
+    context = {
+        'step': step,
+        'steps': [1, 2, 3, 4, 5],
+        'form': form,
+        'form_data': form_data,
+        'offer_id': offer_id,
+    }
+
+    return render(request, 'offers/finalize_purchase.html', context)

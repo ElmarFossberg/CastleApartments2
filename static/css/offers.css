@@ -84,3 +84,47 @@
 .status-rejected {
     background-color: #d9534f; /* red */
 }
+
+.payment-title {
+  font-size: 2em;
+  margin-bottom: 1rem;
+}
+
+.payment-list {
+  list-style: none;
+  padding: 0;
+}
+
+.payment-item {
+  border: 1px solid #ddd;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  border-radius: 6px;
+  background: #f9f9f9;
+}
+
+.payment-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+}
+
+.payment-details p {
+  margin: 0.3rem 0;
+}
+
+.payment-price {
+  color: #2a7ae2;
+  font-weight: 600;
+}
+
+.payment-confirmed {
+  margin-top: 0.5rem;
+  font-style: italic;
+}
+
+.payment-no-purchases {
+  font-style: italic;
+  color: #666;
+}

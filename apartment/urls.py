@@ -8,4 +8,6 @@ urlpatterns = [
 
     path('my-properties', views.my_properties, name='my_properties'),
 
+    path('my-payments', views.my_payments, name='my_payments'),
+
 ]
