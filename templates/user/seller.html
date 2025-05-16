@@ -13,12 +13,12 @@
     </div>
 
     <!-- Profile Header -->
-    <div class="profile-header">
-        <div class="profile-image">
+    <div class="seller-profile-header">
+        <div class="seller-profile-image">
             <img src="{{ seller.profile.profile_image }}" alt="Profile picture">
         </div>
 
-        <div class="profile-info">
+        <div class="seller-profile-info">
             <h1>{{ seller.profile.full_name }}</h1>
             {% if seller.firm %}
             <h2>Firm: {{ seller.firm.firm_name }}</h2>
@@ -29,25 +29,24 @@
     </div>
 
     <!-- Main Content -->
-    <div class="profile-content">
-            <!-- Left Column -->
-            <div class="profile-details">
-                <div class="detail-card">
+    <div class="seller-profile-content">
+            <div class="seller-profile-details">
+                <div class="seller-detail-card">
                     <h3>Contact Information</h3>
-                    <p class="contact-information"><i class="fa fa-envelope"></i> {{ seller.profile.email }}</p>
-                    <p class="contact-information"><i class="fa fa-phone"></i> {{ seller.profile.phone }}</p>
+                    <p class="seller-contact-information"><i class="fa fa-envelope"></i> {{ seller.profile.email }}</p>
+                    <p class="seller-contact-information"><i class="fa fa-phone"></i> {{ seller.profile.phone }}</p>
 
                     {% if seller.firm %}
-                    <div class="firm-address">
-                        <p class="contact-information"><i class="fa fa-map-marker-alt"></i>{{ seller.firm.firm_address }}</p>
+                    <div class="seller-firm-address">
+                        <p class="seller-contact-information"><i class="fa fa-map-marker-alt"></i>{{ seller.firm.firm_address }}</p>
                     </div>
                     {% endif %}
                 </div>
 
                 {% if seller.bio %}
-                <div class="detail-card">
+                <div class="seller-detail-card">
                     <h3>Bio</h3>
-                    <p class="contact-information">{{ seller.bio }}</p>
+                    <p class="seller-contact-information">{{ seller.bio }}</p>
                 </div>
                 {% endif %}
             </div>
@@ -60,8 +59,8 @@
                 {% for apt in apartments %}
                 <div class="apartment-card {% if apt.sold %}sold{% endif %}">
                     <div class="card-image-container">
-                        {% if apt.images.first %}
-                        <img class="card-image" src="{{ apt.images.first.image_url }}" alt="{{ apt.address }}" />
+                        {% if apt.img%}
+                        <img class="card-image" src="{{apt.img}}" alt="{{ apt.address }}" />
                         {% else %}
                         <div class="thumbnail-placeholder"></div>
                         {% endif %}

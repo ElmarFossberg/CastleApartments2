@@ -2,6 +2,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse
 
+import apartment
 from apartment.models import Apartment, ApartmentImages, PostalCode
 from purchaseOffer.models import *
 from user.models import UserProfile, Buyer, Seller
@@ -211,6 +212,9 @@ def finalize_purchase(request, offer_id):
                 )
                 purchase_offer.finalized = True
                 purchase_offer.save()
+
+                apartment.sold = True
+                apartment.save()
 
                 # Clear session data
                 request.session.pop('form_data', None)

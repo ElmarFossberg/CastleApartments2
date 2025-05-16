@@ -1,4 +1,4 @@
-/* Purchase Offers Page */
+
 .purchase-offers-container {
     max-width: 1200px;
 }
@@ -15,7 +15,7 @@
     border-collapse: collapse;
     margin-top: 1rem;
     background-color: white;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1); /* subtle shadow for separation */
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
     border-radius: 6px;
     overflow: hidden;
 }
@@ -24,7 +24,7 @@
 .offers-table td {
     padding: 1rem;
     text-align: left;
-    border-bottom: 1px solid var(--border); /* lighter border for subtle separation */
+    border-bottom: 1px solid var(--border);
     color: var(--dark-gray);
     font-weight: 400;
 }
@@ -54,7 +54,7 @@
 .no-offers {
   display: flex;
   flex-direction: column;
-  align-items: flex-start; /* aligns button left */
+  align-items: flex-start;
   gap: 1rem;
 }
 
@@ -72,17 +72,17 @@
     text-transform: capitalize;
 }
 
-/* Status color variants */
+
 .status-pending {
-    background-color: #f0ad4e; /* orange */
+    background-color: #f0ad4e;
 }
 
 .status-accepted {
-    background-color: #5cb85c; /* green */
+    background-color: #5cb85c;
 }
 
 .status-rejected {
-    background-color: #d9534f; /* red */
+    background-color: #d9534f;
 }
 
 .payment-title {

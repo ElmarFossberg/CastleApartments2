@@ -56,22 +56,3 @@
   gap: 1rem;
   text-align: center;
 }
-
-
-@media (min-width: 768px) {
-  .footer-bottom {
-    flex-direction: row;
-    text-align: left;
-  }
-}
-
-@media (max-width: 576px) {
-  .footer {
-    padding: 2rem 1.5rem 0;
-  }
-
-  .footer-container {
-    grid-template-columns: 1fr;
-    gap: 2rem;
-  }
-}

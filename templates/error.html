@@ -3,7 +3,7 @@
 
 {% block content %}
 <div class="error-container">
-    <div class="error-card">
+    <section class="error-card">
         <h1 class="error-title">Oops!</h1>
         <p class="error-message">{{ message }}</p>
         <img src="{% static 'images/error.jpg' %}" alt="Error illustration" class="error-image" />
@@ -18,6 +18,6 @@
               <i class="fa fa-arrow-left" aria-hidden="true"></i> Go Back
             </a>
         </div>
-    </div>
+    </section>
 </div>
 {% endblock %}

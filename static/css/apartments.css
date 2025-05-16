@@ -1,11 +1,9 @@
-/* Main container */
 .apartments-container {
   max-width: 1200px;
   margin: 0 auto;
   padding: 20px;
 }
 
-/* Title */
 .apartments-title {
   font-size: 2rem;
   color: var(--dark-gray);
@@ -14,7 +12,6 @@
   font-weight: 600;
 }
 
-/* Grid layout */
 .apartments-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -22,7 +19,6 @@
   padding: 0 20px;
 }
 
-/* Card styling */
 .apartment-card {
   border-radius: 12px;
   overflow: hidden;
@@ -44,7 +40,6 @@
   box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
 }
 
-/* Sold state */
 .apartment-card.sold {
   opacity: 0.9;
 }
@@ -81,9 +76,6 @@
   transform: scale(1.03);
 }
 
-
-
-/* Card content */
 .card-content {
   padding: 20px;
 }
@@ -104,7 +96,6 @@
   margin: 0 0 16px 0;
 }
 
-/* Property details grid */
 .property-details {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -130,7 +121,6 @@
   text-transform: capitalize;
 }
 
-/* Button */
 .card-button {
   display: block;
   width: 100%;
@@ -155,7 +145,7 @@
 .resubmit-container {
   display: flex;
   flex-direction: column;
-  align-items: center; /* center button and status text horizontally */
+  align-items: center;
 }
 
 
@@ -166,7 +156,6 @@
   margin-top: 8px;
 }
 
-/* No apartments message */
 .no-apartments {
   text-align: center;
   grid-column: 1 / -1;
@@ -175,7 +164,6 @@
   padding: 40px 0;
 }
 
-/* === Apartment Detail Page Styles === */
 
 .apartment-detail-container {
   max-width: 960px;
@@ -303,9 +291,6 @@
 /*  Apartment detail  */
 /* ------------------ */
 
-/* static/css/apartment.css */
-
-/* container centering & padding */
 .apartment-detail-container {
   max-width: 900px;
   margin: 2rem auto;
@@ -313,15 +298,12 @@
   font-family: sans-serif;
   color: var(--dark-gray);
 }
-
-/* Title */
 .apartment-title {
   font-size: 2rem;
   margin-bottom: 1.5rem;
 
 }
 
-/* Info grid: image + details */
 .apartment-info-grid {
   display: grid;
   grid-template-columns: 3fr 1.3fr;
@@ -333,11 +315,8 @@
   padding-top: 1.5rem;
   padding-left: 1.5rem;
   padding-right: 1.5rem;
-
 }
 
-
-/* Detail rows */
 .apartment-details .detail-row {
   display: flex;
   justify-content: space-between;
@@ -349,8 +328,6 @@
   font-weight: 600;
 }
 
-
-/* Status badge coloring */
 .detail-value.available {
   color: #ffffff;
   background-color: #2a8f2a;
@@ -364,12 +341,9 @@
     padding: 0.5rem;
 }
 
-/* Full-width row for address */
 .detail-row.full-width {
   grid-column: 1 / -1;
 }
-
-/* Description */
 .apartment-description {
   margin-top: 2rem;
   background: #ffffff;
@@ -380,9 +354,9 @@
 
 .apartment-seller-information {
   display: flex;
-  flex-direction: column;   /* ← stack the children vertically */
-  align-items: flex-start;  /* ← left-align them (optional) */
-  gap: 0.5rem;              /* ← adds a little breathing room between each button */
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.5rem;
   margin-top: 2rem;
   background: #fff;
   padding: 1.5rem;
@@ -426,8 +400,8 @@
 
 .apartment-bottom-row {
   display: flex;
-  gap: 1rem;              /* space between the two cards */
-  margin-top: 2rem;        /* same as you had on the cards themselves */
+  gap: 1rem;
+  margin-top: 2rem;
 }
 
 
@@ -453,7 +427,6 @@
   display: block;
 }
 
-/* Prev/Next buttons */
 .apartment-slider .prev,
 .apartment-slider .next {
   position: absolute;
@@ -470,20 +443,18 @@
 .apartment-slider .prev { left: 0.5rem; }
 .apartment-slider .next { right: 0.5rem; }
 
-/* Thumbnails row */
 .apartment-slider .thumbnails {
   display: flex;
   gap: 0.5rem;
   margin-top: 0.5rem;
   overflow: scroll;
   overflow-y: hidden;
-
-  overflow-x: auto;       /* enable horizontal scroll when needed */
-  padding-bottom: 0.5rem; /* room for the scrollbar */
-  scrollbar-width: thin;  /* Firefox: thinner scrollbar */
+  overflow-x: auto;
+  padding-bottom: 0.5rem;
+  scrollbar-width: thin;
 }
 .apartment-slider .thumb {
-  flex: 0 0 auto;      /* keep them from shrinking or growing */
+  flex: 0 0 auto;
   width: 60px;
   height: 40px;
   object-fit: cover;

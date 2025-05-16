@@ -1,4 +1,3 @@
-/* --------------- overall form grid ---------------- */
 .filter-form {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
@@ -11,7 +10,6 @@
   font-family: sans-serif;
 }
 
-/* --------------- each control + icon --------------- */
 .filter-group {
   position: relative;
   display: flex;
@@ -37,7 +35,6 @@
   background-color: #f9f9f9;
 }
 
-/* FontAwe­some icon on the right */
 .filter-group i.fa {
   position: absolute;
   right: 0.75rem;
@@ -48,7 +45,6 @@
   font-size: 1.1rem;
 }
 
-/* ------------- buttons ------------- */
 .filter-buttons {
   grid-column: span 5;
   display: flex;
@@ -78,7 +74,6 @@
   color: #fff;
 }
 
-/* ------------- radio button styles ------------- */
 .radio-container {
   padding: 0.6rem 0.75rem;
   border: 1px solid #ccc;
@@ -133,7 +128,6 @@
   background: #007bff;
 }
 
-/* Remove default form select arrow */
 .filter-group select {
   background-image: none;
 }

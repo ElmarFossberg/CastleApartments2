@@ -1,8 +1,8 @@
 from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import render, redirect
-from django.contrib import messages
+from apartment.context import format_apartments
 
-from apartment.models import Apartment
+from apartment.models import Apartment, ApartmentImages
 from user.forms.profile_form import  ProfileForm
 
 from user.models import  Seller, RealEstateFirm
@@ -96,6 +96,12 @@ def get_seller_by_id(request, seller_id):
         return render(request, 'error.html', {"message": "Seller not found."}, status=404)
 
     apartments = Apartment.objects.filter(seller=seller)
+
+    for apartment in apartments:
+        image_obj = ApartmentImages.objects.filter(apartment=apartment).first()
+        apartment.number_of_rooms = apartment.number_of_bedrooms + apartment.number_of_bathrooms
+        apartment.img = image_obj.image if image_obj else None
+
     seller_profile = seller.profile
 
     try:

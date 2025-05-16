@@ -5,10 +5,12 @@
 
 {% include '_messages.html' %}
 
-
+<!-- Include messages template to show success/error notifications -->
 <form method="post" action="{% url 'register' %}">
   {% csrf_token %}
 
+
+  <!-- Show errors from user_form if there are any -->
   {% if user_form.errors %}
     <div class="alert alert-error">
       {% for field in user_form %}
@@ -22,6 +24,7 @@
     </div>
   {% endif %}
 
+  <!-- Render each field in user_form -->
   {% for field in user_form %}
   <div class="form-group">
     {{ field.label_tag }} {{ field }}
@@ -30,20 +33,6 @@
     {% endif %}
   </div>
   {% endfor %}
-
-  {% if profile_form.errors %}
-    <div class="alert alert-error">
-      {% for field in profile_form %}
-        {% for error in field.errors %}
-          <p>{{ field.label }}: {{ error }}</p>
-        {% endfor %}
-      {% endfor %}
-      {% for error in profile_form.non_field_errors %}
-        <p>{{ error }}</p>
-      {% endfor %}
-    </div>
-  {% endif %}
-
   {% for field in profile_form %}
   <div class="form-group">
     {{ field.label_tag }} {{ field }}

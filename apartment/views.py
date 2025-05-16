@@ -143,7 +143,10 @@ def my_properties(request):
 @login_required
 @login_required
 def my_payments(request):
+    # Get the user
     user = request.user
+
+    # Get data based on if its a seller or buyer
     try:
         buyer = Buyer.objects.get(profile__user=user)
         buyer_offers = PurchaseOffer.objects.filter(buyer=buyer, finalized=True)
@@ -156,11 +159,12 @@ def my_payments(request):
     except Seller.DoesNotExist:
         seller_offers = PurchaseOffer.objects.none()
 
+    # Get buyer or seller offers
     offers = buyer_offers | seller_offers
 
+    # Our beautifull data
     finalized_purchases = FinalizedPurchaseOffer.objects.filter(purchase_offer__in=offers)
 
-    context = {
+    return render(request, 'user/my_payments.html', {
         'finalized_purchases': finalized_purchases,
-    }
-    return render(request, 'user/my_payments.html', context)
+    })

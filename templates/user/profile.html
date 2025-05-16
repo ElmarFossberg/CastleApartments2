@@ -3,11 +3,12 @@
 
 {% block content %}
 <div class="profile-main">
+    <!-- Profile header with title and info -->
     <section class="profile-header">
         <h1>Profile</h1>
         <p>Please complete your profile to gain full access to all website features, including the ability to send and receive offers.</p>
     </section>
-
+   <!-- Section showing user profile details -->
     <div class="profile-content">
         <section class="profile-details">
             <div class="profile-image">
@@ -21,6 +22,7 @@
             </ul>
         </section>
 
+        <!-- update profile form (complete profile) -->
         <section class="profile-form">
             <form method="post" action="{% url 'profile' %}" enctype="multipart/form-data">
                 {% csrf_token %}
