@@ -213,6 +213,7 @@ def finalize_purchase(request, offer_id):
                 purchase_offer.finalized = True
                 purchase_offer.save()
 
+                apartment = purchase_offer.apartment
                 apartment.sold = True
                 apartment.save()
 
