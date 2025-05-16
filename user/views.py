@@ -5,7 +5,7 @@ from django.contrib import messages
 from apartment.models import Apartment
 from user.forms.profile_form import  ProfileForm
 
-from user.models import UserProfile, Seller, RealEstateFirm
+from user.models import  Seller, RealEstateFirm
 from user.forms.profile_form import  BuyerForm, SellerForm
 from django.contrib.auth.decorators import login_required
 
@@ -89,11 +89,15 @@ def profile(request):
         "success": success,
     })
 
-def get_seller_by_id(request, profile_id):
-    profile = UserProfile.objects.get(id=profile_id)
-    seller = Seller.objects.get(profile=profile)
-    apartments = Apartment.objects.filter(seller=seller)  # use filter, not get
+def get_seller_by_id(request, seller_id):
+    try:
+        seller = Seller.objects.get(id=seller_id)
+    except Seller.DoesNotExist:
+        return render(request, 'error.html', {"message": "Seller not found."}, status=404)
+
+    apartments = Apartment.objects.filter(seller=seller)
     seller_profile = seller.profile
+
     try:
         real_estate_firm = RealEstateFirm.objects.get(seller=seller)
     except RealEstateFirm.DoesNotExist:
