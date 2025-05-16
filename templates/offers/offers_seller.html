@@ -1,6 +1,73 @@
 {% extends 'base.html' %}
-{% load static %}
-{% block content %}
-<h1>My Received Offers</h1>
 
+{% block content %}
+<div class="purchase-offers-container">
+    <h1 class="page-title">Purchase Offers for Your Properties</h1>
+
+    <div class="offers-list">
+        {% if purchase_offers %}
+            <table class="offers-table">
+                <thead>
+                    <tr>
+                        <th>Property</th>
+                        <th>Offer Date</th>
+                        <th>Expiration Date</th>
+                        <th>Status</th>
+                        <th>Buyer</th>
+                        <th>Buyer Email</th>   <!-- new -->
+                        <th>Buyer Phone</th>   <!-- new -->
+                        <th>Offer Price</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for offer in purchase_offers %}
+                <tr class="offer-row offer-{{ offer.status }}">
+                    <td>
+                        <a href="{% url 'apartment_by_id' offer.apartment.id %}" class="purchase-offer-link">
+                            {{ offer.apartment.address }}, {{ offer.apartment.postal_code.city_name }}
+                        </a>
+                    </td>
+                    <td>{{ offer.purchase_date|date:"M d, Y" }}</td>
+                    <td>{{ offer.expiration_date|date:"M d, Y" }}</td>
+                    <td>
+                        <span class="status-badge status-{{ offer.status }}">
+                            {{ offer.get_status_display }}
+                        </span>
+                    </td>
+                    <td>{{ offer.buyer.profile.full_name }}</td>
+                    <td>{{ offer.buyer.profile.email }}</td>
+                    <td>{{ offer.buyer.profile.phone }}</td>
+                    <td>{{ offer.formatted_amount }} Kr</td>
+                    <td>
+                        {% if offer.status == 'pending' %}
+                            <form method="post">
+                                {% csrf_token %}
+                                <input type="hidden" name="offer_id" value="{{ offer.id }}">
+                                <button type="submit" class="button button-accept">Accept</button>
+                            </form>
+                        {% else %}
+                            -
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+            </table>
+        {% else %}
+            <div class="no-offers">
+                <p>No pending purchase offers.</p>
+            </div>
+        {% endif %}
+    </div>
+</div>
+    {% if messages %}
+<div class="messages">
+  {% for message in messages %}
+  <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %}">
+    {{ message }}
+  </div>
+  {% endfor %}
+</div>
+{% endif %}
 {% endblock %}

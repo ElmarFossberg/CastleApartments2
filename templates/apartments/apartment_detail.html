@@ -105,17 +105,21 @@
                     {% endif %}
                     </div>
                 {% endif %}
-            {% endif %}
             <!-- Favourite button -->
             <form method="post" action="{% url 'favourite' %}">
                 {% csrf_token %}
                     <input type="hidden" name="apartment_id" value="{{ apartment.id }}">
                     {% if apartment.is_favourited %}
-                        <button class="button" type="submit">Unfavourite</button>
+                        <button class="button" type="submit">
+                           <i class="fas fa-heart-broken"></i> Unfavourite
+                        </button>
                     {% else %}
-                        <button class="button" type="submit" >Favourite</button>
+                        <button class="button" type="submit">
+                            <i class="fas fa-heart"></i> Favourite
+                        </button>
                     {% endif %}
             </form>
+            {% endif %}
         </div>
     </div>
     <div class="apartment-bottom-row">
@@ -124,8 +128,7 @@
             <h2>Seller information</h2>
             <p>Name: {{ seller_profile.full_name }}</p>
             <img src="{{ seller_profile.profile_image }}" alt="{{ seller_profile.full_name }}" />
-            <a href="user/seller/{{ seller_profile.id }}" class="button">Go to seller profile</a>
-
+            <a href="user/seller/{{ seller.id }}" class="button">Go to seller profile</a>
         </div>
 
         <div class="apartment-description">

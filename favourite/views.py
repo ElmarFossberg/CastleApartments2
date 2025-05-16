@@ -1,6 +1,7 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 
+from apartment.context import format_apartments
 from favourite.models import Favourites
 from apartment.models import Apartment
 from apartment.models import ApartmentImages
@@ -11,6 +12,12 @@ from django.shortcuts import redirect
 
 @login_required(login_url='/user/login')
 def index(request):
+    user_profile = request.user.userprofile
+
+    # Check if user is seller if he is redirect him
+    if user_profile.user_type == "seller":
+        return redirect('/my-properties')
+
     if request.method == 'POST':
         # Make sure the user is logged in
         if not request.user.is_authenticated:
@@ -33,10 +40,6 @@ def index(request):
     # Get apartments matching those IDs
     apartments = Apartment.objects.filter(id__in=apartment_ids)
     # Format
-    for apartment in apartments:
-        image = ApartmentImages.objects.filter(apartment=apartment).first()
-        apartment.image = image.image if image else "https://developers.elementor.com/docs/assets/img/elementor-placeholder-image.png"
-        apartment.formatted_price = f"{apartment.price:,.0f}".replace(",", ".")
-        apartment.number_of_rooms = apartment.number_of_bathrooms + apartment.number_of_bedrooms
+    format_apartments(apartments)
 
     return render(request, 'favourite/favourite.html', {'apartments': apartments})
